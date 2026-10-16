@@ -1,22 +1,24 @@
-import type { Metadata } from "next";
 import "@/app/globals.css";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
+import Header from "@/components/layouts/header";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Carrier Pigeon - The best way to communicate",
   description: "Carrier Pigeon is where people can communicate with each other about things that interest them.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ 
+  children
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html
-      lang="en"
-      className={cn("h-full", "antialiased", "font-sans", geist.variable)}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body className="antialiased">
+        <Header />
+        <main className="pt-14 p-4">{children}</main>
+      </body>
     </html>
   );
 }
