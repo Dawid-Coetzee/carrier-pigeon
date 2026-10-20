@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { cva, VariantProps } from "class-variance-authority";
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva("flex items-center justify-center cursor-pointer", {
     variants: {
@@ -28,12 +29,13 @@ type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonVariants
 export default function Button({ 
     isIcon, 
     variant, 
+    className,
     size, 
     ...buttonProps 
 }: ButtonProps) {
     return (
     <button 
-        className={buttonVariants({ variant, size, isIcon})}
+        className={cn(buttonVariants({ variant, size, isIcon}), className)}
         data-shape={isIcon ? "circle": "pill"}
         {...buttonProps} 
     />
