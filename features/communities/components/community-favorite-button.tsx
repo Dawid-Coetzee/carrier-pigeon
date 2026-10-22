@@ -2,7 +2,7 @@
 
 import { ColouredFavorite, Favorite } from "@/components/icons/favorite";
 import Button from "@/components/ui/button";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 
 type Props = {
     isFavorite?: boolean;
