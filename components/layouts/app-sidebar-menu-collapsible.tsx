@@ -18,7 +18,7 @@ type Props = {
 
 export default function AppSidebarMenuCollapsible({ title, children }: Props) {
     return (
-    <Collapsible defaultOpen className="group/collapsible">
+    <Collapsible className="group/collapsible">
         <SidebarGroup>
             <SidebarMenuButton className="justify-between cursor-pointer" asChild>
                 <CollapsibleTrigger>

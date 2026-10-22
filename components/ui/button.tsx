@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from '@/lib/utils';
 
-const buttonVariants = cva("flex items-center justify-center cursor-pointer", {
+const buttonVariants = cva(cn("flex items-center justify-center cursor-pointer rounded-full", "data-[shape='circle']:px-0"), {
     variants: {
         variant: {
             primary: "",
@@ -10,12 +10,9 @@ const buttonVariants = cva("flex items-center justify-center cursor-pointer", {
             plain: "bg-transparent hover:bg-[#d4c4a8] active:bg-[#831e20]",
     },
         size: {
-            sm: "",
-            md: "h-10 px-4 rounded-full",
+            sm: cn("h-8 px-3", "data-[shape='circle']:size-8"),
+            md: cn("h-10 px-4", "data-[shape='circle']:size-10"),
             lg: ""
-    },
-    isIcon: {
-        true: "data-[shape='circle']:size-10 data-[shape='circle']:px-0" 
     }
     },
     defaultVariants: {
@@ -24,10 +21,13 @@ const buttonVariants = cva("flex items-center justify-center cursor-pointer", {
     }
 });
 
-type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonVariants>;
+type ButtonProps = ComponentProps<"button"> &
+    VariantProps<typeof buttonVariants> & {
+        isIcon?: boolean;
+    };
 
 export default function Button({ 
-    isIcon, 
+    isIcon = false, 
     variant, 
     className,
     size, 
@@ -35,7 +35,7 @@ export default function Button({
 }: ButtonProps) {
     return (
     <button 
-        className={cn(buttonVariants({ variant, size, isIcon}), className)}
+        className={cn(buttonVariants({ variant, size}), className)}
         data-shape={isIcon ? "circle": "pill"}
         {...buttonProps} 
     />
