@@ -2,6 +2,13 @@ import "@/app/globals.css";
 import { AppSidebar } from "@/components/layouts/app-sidebar";
 import Header from "@/components/layouts/header";
 import { SidebarProvider} from "@/components/ui/sidebar";
+import { MedievalSharp } from "next/font/google";
+
+const medieval_sharp = MedievalSharp({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-medieval-sharp",
+});
 
 import type { Metadata } from "next";
 
@@ -16,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={medieval_sharp.variable}>
       <body className="antialiased">
         <SidebarProvider>
           <Header />

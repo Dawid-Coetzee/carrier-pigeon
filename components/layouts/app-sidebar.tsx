@@ -11,6 +11,7 @@ import {
     SidebarSeparator
 } from "@/components/ui/sidebar";
 import AppSidebarMenuButton from "./app-sidebar-menu-button";
+import AppSidebarMenuCollapsible from "./app-sidebar-menu-collapsible";
 
 // Menu items.
 const items = [
@@ -57,6 +58,9 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarSeparator />
+
+        <AppSidebarMenuCollapsible title="Communities">content</AppSidebarMenuCollapsible>
+
         <SidebarSeparator />
         <SidebarSeparator />
         <SidebarSeparator />
