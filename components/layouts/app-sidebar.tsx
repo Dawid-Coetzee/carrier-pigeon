@@ -7,7 +7,8 @@ import {
     SidebarGroup,
     SidebarGroupContent,
     SidebarMenu,
-    SidebarMenuItem
+    SidebarMenuItem,
+    SidebarSeparator
 } from "@/components/ui/sidebar";
 import AppSidebarMenuButton from "./app-sidebar-menu-button";
 
@@ -54,6 +55,11 @@ export function AppSidebar() {
             </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>
+
+        <SidebarSeparator />
+        <SidebarSeparator />
+        <SidebarSeparator />
+        <SidebarSeparator />
         </SidebarContent>
     </Sidebar>
     );
