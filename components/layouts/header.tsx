@@ -17,8 +17,8 @@ export default function Header() {
                     <Image 
                         src={logo} 
                         alt={"Carrier Pigeon Logo"} 
-                        width={32} 
-                        height={32}
+                        width={45} 
+                        height={45}
                         priority
                     />
                 </Link>

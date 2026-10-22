@@ -7,7 +7,7 @@ const buttonVariants = cva("flex items-center justify-center cursor-pointer", {
         variant: {
             primary: "",
             secondary: "",
-            plain: "bg-transparent hover:bg-[#DBE4E9] active:bg-[#bbc2c5]",
+            plain: "bg-transparent hover:bg-[#d4c4a8] active:bg-[#831e20]",
     },
         size: {
             sm: "",
