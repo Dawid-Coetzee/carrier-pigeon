@@ -10,6 +10,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import Button from "@/components/ui/button";
+import CommunityPreview from "./community-preview";
 
 export default function CommunityCreate() {
     return (
@@ -29,6 +30,9 @@ export default function CommunityCreate() {
                     A name and description would greatly enlighten people as to the nature of your community.
                 </DialogDescription>
             </DialogHeader>
+
+            {/* Preview Card */}
+            <CommunityPreview />
                 
             <DialogFooter className="flex-row justify-end">
                 <Button

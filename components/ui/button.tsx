@@ -5,9 +5,9 @@ import { cn } from '@/lib/utils';
 const buttonVariants = cva(cn("flex items-center justify-center cursor-pointer rounded-full text-[1.04rem] font-[600]", "data-[shape='circle']:px-0"), {
     variants: {
         variant: {
-            primary: "bg-[#d4c4a8] hover:bg-[#c9a876] active:bg-[#831e20] border-1",
-            secondary: "bg-[#a53f42] hover:bg-[#831e20] active:bg-[#ba0110] border-1",
-            plain: "bg-transparent hover:bg-[#d4c4a8] active:bg-[#831e20]",
+            primary: "bg-[var(--primary-button-normal)] hover:bg-[var(--primary-button-hover)] active:bg-[var(--primary-button-active)] border-1",
+            secondary: "bg-[var(--secondary-button-normal)] hover:bg-[var(--primary-button-active)] active:bg-[var(--secondary-button-active)] border-1",
+            plain: "bg-transparent hover:bg-[var(--primary-button-normal)] active:bg-[var(--primary-button-active)]",
     },
         size: {
             sm: cn("h-8 px-3", "data-[shape='circle']:size-8"),

@@ -49,10 +49,10 @@
 }
 
 :root {
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --card: radial-gradient(circle, #d8cbb4 0%, #d4c4a8 65%, #c9a876 85%);
+  --card-foreground: #000;
+  --popover: radial-gradient(circle, #d8cbb4 0%, #d4c4a8 65%, #c9a876 85%);
+  --popover-foreground: #000;
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
@@ -62,9 +62,9 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #000000;
+  --border: #000;
   --input: oklch(0.922 0 0);
-  --ring: #000000;
+  --ring: #000;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -72,16 +72,22 @@
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
   --sidebar: radial-gradient(circle, #d8cbb4 0%, #d4c4a8 65%, #c9a876 85%);
-  --sidebar-foreground: #000000;
+  --sidebar-foreground: #000;
   --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: #000000;
+  --sidebar-primary-foreground: #000;
   --sidebar-accent: #d4c4a8;
   --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: #000000;
+  --sidebar-border: #000;
   --sidebar-ring: oklch(0.708 0 0);
   --background: radial-gradient(circle, #d8cbb4 0%, #d4c4a8 65%, #c9a876 85%);
   --foreground: oklch(0.145 0 0);
-  --button: #000000;
+  --button: #000;
+  --primary-button-normal: #d4c4a8;
+  --primary-button-hover: #c9a876;
+  --primary-button-active: #831e20;
+  --secondary-button-normal: #a53f42;
+  --secondary-button-active: #ba0110;
+
 }
 
 .dark {
