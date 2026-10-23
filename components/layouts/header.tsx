@@ -9,7 +9,7 @@ import { SidebarTrigger } from "../ui/sidebar";
 
 export default function Header() {
     return (
-        <header className="fixed w-full border-b bg-background h-14 px-4 flex items-center justify-between z-60">
+        <header className="fixed w-full border-b-2 [background:var(--background)] h-14 px-4 flex items-center justify-between z-50">
             <div className="flex items-center gap-2">
                 <SidebarTrigger />
 

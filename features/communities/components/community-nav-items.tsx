@@ -1,7 +1,5 @@
 import DefaultCommunityAvatar from "@/components/icons/default-community-avatar"
-import { ColouredFavorite, Favorite } from "@/components/icons/favorite"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Button from "@/components/ui/button"
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import Link from "next/link"
 import CommunityFavoriteButton from "./community-favorite-button"
@@ -21,20 +19,20 @@ export default function CommunityNavItems() {
         <SidebarMenuItem key={id}>
             <SidebarMenuButton className="justify-between" asChild>
                 <Link href={url}>
-                <div className="flex items-center gap-2">
-                    <Avatar>
-                        <AvatarImage 
-                            src={avatar} 
-                            alt={`${title} community's avatar`}
-                        />
-                        <AvatarFallback >
-                            <DefaultCommunityAvatar className={color}/>
-                        </AvatarFallback>
-                    </Avatar>
-                    <span>{title}</span>
-                </div>
+                    <div className="flex items-center gap-2">
+                        <Avatar>
+                            <AvatarImage 
+                                src={avatar} 
+                                alt={`${title} community's avatar`}
+                            />
+                            <AvatarFallback >
+                                <DefaultCommunityAvatar className={color}/>
+                            </AvatarFallback>
+                        </Avatar>
+                        <span>{title}</span>
+                    </div>
                 
-                <CommunityFavoriteButton isFavorite={isFavorite}/>
+                    <CommunityFavoriteButton isFavorite={isFavorite}/>
                 </Link>
             </SidebarMenuButton>
         </SidebarMenuItem>

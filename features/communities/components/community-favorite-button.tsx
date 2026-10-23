@@ -12,12 +12,12 @@ export default function CommunityFavoriteButton({ isFavorite = false }: Props) {
     const [ _isFavorite, setIsFavorite ] = useState<boolean>(isFavorite);
     
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-            event.preventDefault();
+        event.preventDefault();
 
-            setIsFavorite((prev) => !prev)
+        setIsFavorite((prev) => !prev)
 
-            // server action
-        }
+        // server action
+    }
 
     return (
     <Button 

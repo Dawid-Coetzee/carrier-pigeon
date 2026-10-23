@@ -7,13 +7,11 @@ import {
     SidebarGroup,
     SidebarGroupContent,
     SidebarMenu,
-    SidebarMenuButton,
     SidebarMenuItem,
     SidebarSeparator
 } from "@/components/ui/sidebar";
 import AppSidebarMenuButton from "./app-sidebar-menu-button";
 import AppSidebarMenuCollapsible from "./app-sidebar-menu-collapsible";
-import Plus from "../icons/plus";
 import { ColouredSettings, Settings } from "../icons/settings";
 import CommunityNavItems from "@/features/communities/components/community-nav-items";
 import CommunityCreate from "@/features/communities/components/community-create";
@@ -69,7 +67,8 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                     <CommunityCreate />
                 </SidebarMenuItem>
-                <SidebarMenuItem >
+                
+                <SidebarMenuItem>
                     <AppSidebarMenuButton 
                         title="Manage Communities" 
                         url="/communities"

@@ -26,5 +26,6 @@ export default function AppSidebarMenuButton({ icon, selected, title, url }: Pro
             <span>{title}</span>
         </Link>
     </SidebarMenuButton>
+
     )
 }
