@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from '@/lib/utils';
 
-const buttonVariants = cva(cn("flex items-center justify-center cursor-pointer rounded-full text-[1.04rem] font-[600]", "data-[shape='circle']:px-0"), {
+const buttonVariants = cva(cn("flex items-center justify-center cursor-pointer rounded-full text-[1.04rem] text-text1 font-[600]", "data-[shape='circle']:px-0"), {
     variants: {
         variant: {
             primary: "bg-[var(--primary-button-normal)] hover:bg-[var(--primary-button-hover)] active:bg-[var(--primary-button-active)] border-1",
