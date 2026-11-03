@@ -1,17 +1,68 @@
-import * as React from "react"
-import { cn } from "cn"
+"use client";
 
-function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
+import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
+import { ComponentProps, useId } from "react";
+import ExclamationTriangle from "@/components/icons/error"
+
+type Props = {
+  label?: string
+} & ComponentProps<"textarea">;
+
+function Textarea({ className, label, required, ...props }: Props) {
+  const labelId = useId();
+
   return (
-    <textarea
-      data-slot="textarea"
+    <Label 
       className={cn(
-        "flex field-sizing-content min-h-16 w-full rounded-md border border-input bg-transparent px-2.5 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-text1 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
+        "group",
+        "bg-primary-button-hover hover:bg-primary-button-normal",
+        "font-sans text-text1 font-semibold", 
+        "h-14 px-4 border rounded-textarea-rounding",
+        "flex items-center gap-2", 
+        "focus-within:outline-2 cursor-text",
+        "has-[textarea[aria-invalid=true]]:outline has-[textarea[aria-invalid=true]]:outline-destructive",
         className
-      )}
-      {...props}
-    />
+      )}>
+      <div className={cn(
+        "w-full relative", 
+        label && "focus-within:translate-y-2",
+        "group-has-[textarea:not(:placeholder-shown)]:translate-y-2"
+      )}>
+        {label && (<span 
+          id={labelId}
+          className={cn(
+            "absolute",
+            "font-[inherit] text-text2 text-base group-focus-within:text-sm",
+            "group-has-[textarea:not(:placeholder-shown)]:-translate-y-4 group-has-[textarea:not(:placeholder-shown)]:text-sm",
+            "group-focus-within:-translate-y-4",
+            "duration-180"
+        )}>
+          {label}
+          {required && <span className="text-destructive ml-1">*</span>}
+        </span>
+        )}
+        <textarea
+          data-slot="textarea"
+          data-testid="test-textarea"
+          placeholder=""
+          required={required}
+          className={cn(
+            "font-[inherit] outline-none w-full")}
+          aria-labelledby={label && labelId}
+          {...props}
+        />
+      </div>
+
+      <ExclamationTriangle 
+        className={cn(
+          "hidden",
+          "group-has-[textarea[aria-invalid=true]]:text-destructive", 
+          "group-has-[textarea[aria-invalid=true]]:block"
+        )}
+      />
+    </Label>
   )
 }
 
-export { Textarea }
+export { Textarea };
