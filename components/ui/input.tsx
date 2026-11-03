@@ -25,15 +25,14 @@ function Input({ className, type, label, required, ...props }: Props) {
         className
       )}>
       <div className={cn(
-        "w-full relative", 
-        label && "focus-within:translate-y-2",
-        "group-has-[input:not(:placeholder-shown)]:translate-y-2"
+        "w-full relative flex", 
+        label && "focus-within:translate-y-2 group-has-[input:not(:placeholder-shown)]:translate-y-2",
       )}>
         {label && (<span 
           id={labelId}
           className={cn(
             "absolute",
-            "font-[inherit] text-text2 text-base group-focus-within:text-sm",
+            "text-text2 text-base group-focus-within:text-sm",
             "group-has-[input:not(:placeholder-shown)]:-translate-y-4 group-has-[input:not(:placeholder-shown)]:text-sm",
             "group-focus-within:-translate-y-4",
             "duration-180"
@@ -49,7 +48,7 @@ function Input({ className, type, label, required, ...props }: Props) {
           placeholder=""
           required={required}
           className={cn(
-            "font-[inherit] outline-none w-full")}
+            "outline-none w-full")}
           aria-labelledby={label && labelId}
           {...props}
         />

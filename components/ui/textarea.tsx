@@ -9,7 +9,7 @@ type Props = {
   label?: string
 } & ComponentProps<"textarea">;
 
-function Textarea({ className, label, required, ...props }: Props) {
+function Textarea({ className, label, required, rows, ...props }: Props) {
   const labelId = useId();
 
   return (
@@ -18,24 +18,23 @@ function Textarea({ className, label, required, ...props }: Props) {
         "group",
         "bg-primary-button-hover hover:bg-primary-button-normal",
         "font-sans text-text1 font-semibold", 
-        "h-14 px-4 border rounded-textarea-rounding",
+        "min-h-14 p-4 border rounded-input-rounding",
         "flex items-center gap-2", 
         "focus-within:outline-2 cursor-text",
         "has-[textarea[aria-invalid=true]]:outline has-[textarea[aria-invalid=true]]:outline-destructive",
         className
       )}>
       <div className={cn(
-        "w-full relative", 
-        label && "focus-within:translate-y-2",
-        "group-has-[textarea:not(:placeholder-shown)]:translate-y-2"
+        "w-full relative flex", 
+        label && "focus-within:translate-y-2 group-has-[textarea:not(:placeholder-shown)]:translate-y-2"
       )}>
         {label && (<span 
           id={labelId}
           className={cn(
             "absolute",
-            "font-[inherit] text-text2 text-base group-focus-within:text-sm",
+            "text-text2 text-base",
             "group-has-[textarea:not(:placeholder-shown)]:-translate-y-4 group-has-[textarea:not(:placeholder-shown)]:text-sm",
-            "group-focus-within:-translate-y-4",
+            "group-focus-within:-translate-y-4 group-focus-within:text-sm",
             "duration-180"
         )}>
           {label}
@@ -43,13 +42,16 @@ function Textarea({ className, label, required, ...props }: Props) {
         </span>
         )}
         <textarea
+          name="communityDescription"
           data-slot="textarea"
           data-testid="test-textarea"
           placeholder=""
           required={required}
           className={cn(
-            "font-[inherit] outline-none w-full")}
+            "outline-none w-full resize-none",
+            !rows && "field-sizing-content")}
           aria-labelledby={label && labelId}
+          rows={rows}
           {...props}
         />
       </div>
