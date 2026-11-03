@@ -487,7 +487,7 @@ const sidebarMenuButtonVariants = cva(
     "h-10 w-full px-4 py-1 flex items-center gap-2 rounded-sm", 
     "hover:bg-(--primary-button-normal)",
     "active:bg-(--sidebar-button-active)",
-    "data-[active='true']:bg-[#c9a876] data-[active='true']:border-1"
+    "data-[active='true']:bg-page-button-active data-[active='true']:border-1"
   ))
 
 function SidebarMenuButton({

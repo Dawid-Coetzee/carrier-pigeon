@@ -16,9 +16,9 @@ type Props = {
 
 export default function communityPreview({ withImages, banner, avatar }: Props) {
     return (
-        <Card className="pt-0 pb-4 border-2 shadow-[1px_2px_4px_2px_#777] rounded-md gap-2">
+        <Card className="pt-0 pb-4 border-2 shadow-preview-card-shadow rounded-md gap-2">
             {withImages && (
-                <div className="relative h-10 w-full overflow-hidden bg-(--primary-button-active)">
+                <div className="relative h-10 w-full overflow-hidden bg-primary-button-active">
                     {banner && (
                         <Image 
                             src={banner} 

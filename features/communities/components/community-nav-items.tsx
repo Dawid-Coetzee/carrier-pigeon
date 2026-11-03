@@ -26,7 +26,7 @@ export default function CommunityNavItems() {
                                 alt={`${title} community's avatar`}
                             />
                             <AvatarFallback >
-                                <DefaultCommunityAvatar className={color} /* className should only be used for color here *//>
+                                <DefaultCommunityAvatar style={{ color }}/>
                             </AvatarFallback>
                         </Avatar>
                         <span>{title}</span>

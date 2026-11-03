@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { ComponentProps, useId } from "react";
+import ExclamationTriangle from "@/components/icons/error"
 
 type Props = {
   label?: string
@@ -17,9 +18,10 @@ function Input({ className, type, label, ...props }: Props) {
         "group",
         "bg-primary-button-hover hover:bg-primary-button-normal",
         "font-sans text-text1 font-semibold", 
-        "h-14 px-4 border rounded-[20px]",
-        "flex items-center", 
-        "focus-within:outline-2 cursor-text", 
+        "h-14 px-4 border rounded-input-rounding",
+        "flex items-center gap-2", 
+        "focus-within:outline-2 cursor-text",
+        "has-[input[aria-invalid=true]]:outline has-[input[aria-invalid=true]]:outline-destructive",
         className
       )}>
       <div className={cn(
@@ -50,6 +52,8 @@ function Input({ className, type, label, ...props }: Props) {
           {...props}
         />
       </div>
+
+      <ExclamationTriangle className="text-text1 group-has-[input[aria-invalid=true]]:text-destructive "/>
     </Label>
   )
 }

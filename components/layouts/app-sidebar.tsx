@@ -1,5 +1,4 @@
 import { Home, Popular, Explore, All } from "@/components/icons/sidebar-icons";
-import { ColouredHome, ColouredPopular, ColouredExplore, ColouredAll } from "@/components/icons/sidebar-icons-selected"
 
 import {
     Sidebar,
@@ -12,7 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import AppSidebarMenuButton from "./app-sidebar-menu-button";
 import AppSidebarMenuCollapsible from "./app-sidebar-menu-collapsible";
-import { ColouredSettings, Settings } from "../icons/settings";
+import { Settings } from "../icons/settings";
 import CommunityNavItems from "@/features/communities/components/community-nav-items";
 import CommunityCreate from "@/features/communities/components/community-create";
 
@@ -22,25 +21,25 @@ const items = [
     title: "Home",
     url: "/",
     icon: <Home />,
-    selected: <ColouredHome />
+    selected: <Home className="text-primary-button-active"/>
     },
     {
     title: "Popular",
     url: "/popular",
     icon: <Popular />,
-    selected: <ColouredPopular />
+    selected: <Popular className="text-primary-button-active"/>
     },
     {
     title: "Explore",
     url: "/explore",
     icon: <Explore />,
-    selected: <ColouredExplore />
+    selected: <Explore className="text-primary-button-active"/>
     },
     {
     title: "All",
     url: "/all",
     icon: <All />,
-    selected: <ColouredAll />
+    selected: <All className="text-primary-button-active"/>
     }
 ];
 
@@ -73,7 +72,7 @@ export function AppSidebar() {
                         title="Manage Communities" 
                         url="/communities"
                         icon={<Settings />}
-                        selected={<ColouredSettings />}
+                        selected={<Settings className="text-primary-button-active" />}
                     />
                 </SidebarMenuItem>
 

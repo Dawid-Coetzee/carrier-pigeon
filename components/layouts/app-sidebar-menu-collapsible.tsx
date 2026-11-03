@@ -22,7 +22,7 @@ export default function AppSidebarMenuCollapsible({ title, children }: Props) {
         <SidebarGroup>
             <SidebarMenuButton className="justify-between cursor-pointer" asChild>
                 <CollapsibleTrigger>
-                    <span className="text-[.85rem] uppercase font-medium text-text1 tracking-widest">
+                    <span className="text-sidebar-collapsible uppercase font-medium text-text1 tracking-widest">
                         {title}
                     </span>
                     <span className="h-8 flex items-center">

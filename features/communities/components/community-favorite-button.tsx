@@ -1,6 +1,6 @@
 "use client";
 
-import { ColouredFavorite, Favorite } from "@/components/icons/favorite";
+import { Favorite } from "@/components/icons/favorite";
 import Button from "@/components/ui/button";
 import { useState, type MouseEvent } from "react";
 
@@ -21,13 +21,13 @@ export default function CommunityFavoriteButton({ isFavorite = false }: Props) {
 
     return (
     <Button 
-        className="hover:bg-[#c9a876]" 
+        className="hover:bg-sidebar-button-active" 
         variant="plain" 
         size="sm" 
         isIcon
         onClick={handleClick}
     >
-        {_isFavorite ? <ColouredFavorite /> : <Favorite />}
+        <Favorite className={_isFavorite ? "text-primary-button-active": "text-text1"}/>
     </Button>
     )
 }
