@@ -9,7 +9,7 @@ type Props = {
   label?: string
 } & ComponentProps<"input">;
 
-function Input({ className, type, label, ...props }: Props) {
+function Input({ className, type, label, required, ...props }: Props) {
   const labelId = useId();
 
   return (
@@ -39,6 +39,7 @@ function Input({ className, type, label, ...props }: Props) {
             "duration-180"
         )}>
           {label}
+          {required && <span className="text-destructive ml-1">*</span>}
         </span>
         )}
         <input
@@ -46,6 +47,7 @@ function Input({ className, type, label, ...props }: Props) {
           data-slot="input"
           data-testid="test-input"
           placeholder=""
+          required={required}
           className={cn(
             "font-[inherit] outline-none w-full")}
           aria-labelledby={label && labelId}
