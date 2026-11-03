@@ -51,7 +51,7 @@
   --shadow-preview-card-shadow: var(--preview-card-shadow);
   --text-button-text: var(--button-text);
   --text-sidebar-collapsible: var(--sidebar-collapsible);
-  --rounded-input-rounding: var(--input-rounding);
+  --radius-input-rounding: var(--input-rounding);
   --text-description-text: var(--description-text);
 }
 
@@ -66,7 +66,7 @@
   --muted-foreground: #101010;
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: #f55;
   --input: oklch(0.922 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);

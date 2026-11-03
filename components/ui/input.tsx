@@ -53,7 +53,13 @@ function Input({ className, type, label, ...props }: Props) {
         />
       </div>
 
-      <ExclamationTriangle className="text-text1 group-has-[input[aria-invalid=true]]:text-destructive "/>
+      <ExclamationTriangle 
+        className={cn(
+          "hidden",
+          "group-has-[input[aria-invalid=true]]:text-destructive", 
+          "group-has-[input[aria-invalid=true]]:block"
+        )}
+      />
     </Label>
   )
 }
