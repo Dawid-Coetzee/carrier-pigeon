@@ -42,6 +42,8 @@
   --color-secondary-button-active: var(--secondary-button-active);
   --color-page-button-active: var(--page-button-active);
   --color-text2: var(--text2);
+  --color-button-disabled-background: var(--button-disabled-background);
+  --color-button-disabled-foreground: var(--button-disabled-foreground);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -85,11 +87,13 @@
   --page-button-active: #c9a876;
   --input-hover: #c2a77a;
   --sidebar-button-active: #ac8b66;
-  --primary-button-normal: #bea892;
+  --primary-button-normal: #b3895f;
   --primary-button-hover: #a68968;
   --primary-button-active: #831e20;
   --secondary-button-normal: #a53f42;
   --secondary-button-active: #ba0110;
+  --button-disabled-foreground: #4f4f4f;
+  --button-disabled-background: #b5a89b89;
   --text1: #000;
   --text2: #494949;
   --preview-card-shadow: 1px 2px 4px 2px #777;
@@ -128,7 +132,7 @@
   --background: radial-gradient(circle, #d8cbb4 0%, #d4c4a8 65%, #c9a876 85%);
   --foreground: oklch(0.145 0 0);
   --sidebar-button-active: #c4b498;
-  --primary-button-normal: #d4c4a8;
+  --primary-button-normal: #d4b488;
   --primary-button-hover: #c9a876;
   --primary-button-active: #831e20;
   --secondary-button-normal: #a53f42;

@@ -24,6 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 const MAX_NAME_LENGTH = 21;
 const MIN_NAME_LENGTH = 3;
 const TEXTAREA_ROWS = 8;
+const MIN_DESCRIPTION_LENGTH = 1;
 
 const formSchema = z.object({
     name: z
@@ -43,7 +44,15 @@ export default function CommunityCreate() {
         },
     })
     const { control } = form;
-    const { name, description } = useWatch({ control });
+    const name = useWatch({ control, name: "name", defaultValue: "" });
+    const description = useWatch({
+        control,
+        name: "description",
+        defaultValue: "",
+    });
+
+    const isNameInvalid = name.length < MIN_NAME_LENGTH;
+    const isDescription = description.length < MIN_DESCRIPTION_LENGTH
 
     function onSubmit(data: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -150,6 +159,7 @@ export default function CommunityCreate() {
                 <Button
                     variant="primary"
                     size="lg"
+                    disabled={isNameInvalid || isDescription }
                 >
                     Next
                 </Button>
