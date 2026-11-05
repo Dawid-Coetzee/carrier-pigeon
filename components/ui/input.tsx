@@ -6,17 +6,18 @@ import { ComponentProps, useId } from "react";
 import ExclamationTriangle from "@/components/icons/error"
 
 type Props = {
-  label?: string
+  label?: string;
+  prefix?: string;
 } & ComponentProps<"input">;
 
-function Input({ className, type, label, required, ...props }: Props) {
+function Input({ className, prefix, type, label, required, ...props }: Props) {
   const labelId = useId();
 
   return (
     <Label 
       className={cn(
         "group",
-        "bg-primary-button-hover hover:bg-primary-button-normal",
+        "bg-page-button-active hover:bg-input-hover",
         "font-sans text-text1 font-semibold", 
         "h-14 px-4 border rounded-input-rounding",
         "flex items-center gap-2", 
@@ -25,7 +26,7 @@ function Input({ className, type, label, required, ...props }: Props) {
         className
       )}>
       <div className={cn(
-        "w-full relative flex", 
+        "w-full relative flex items-center", 
         label && "focus-within:translate-y-2 group-has-[input:not(:placeholder-shown)]:translate-y-2",
       )}>
         {label && (<span 
@@ -41,6 +42,9 @@ function Input({ className, type, label, required, ...props }: Props) {
           {required && <span className="text-destructive ml-1">*</span>}
         </span>
         )}
+
+        {prefix && <span className="hidden group-has-[input:not(:placeholder-shown)]:inline">{prefix}</span>}
+
         <input
           type={type}
           data-slot="input"
