@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
+import { Controller, useForm, useWatch } from "react-hook-form"
 import * as z from "zod"
 import Plus from "@/components/icons/plus";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
@@ -42,6 +42,8 @@ export default function CommunityCreate() {
             description: ""
         },
     })
+    const { control } = form;
+    const { name, description } = useWatch({ control });
 
     function onSubmit(data: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -66,7 +68,7 @@ export default function CommunityCreate() {
             </DialogHeader>
 
             {/* Preview Card */}
-            <CommunityPreview banner="" avatar="" withImages={false}/>
+            <CommunityPreview name={name} description={description} banner="" avatar="" withImages={false}/>
             <form id="create-community" onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
                     <Controller
