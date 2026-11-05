@@ -216,10 +216,29 @@ function FieldError({
     <div
       role="alert"
       data-slot="field-error"
-      className={cn("text-sm font-normal text-destructive", className)}
+      className={cn("text-sm font-semibold text-destructive", className)}
       {...props}
     >
       {content}
+    </div>
+  )
+}
+
+function FieldCount({
+  className,
+  length,
+  max,
+  ...props
+}: React.ComponentProps<"p"> & { length: number; max?: number}) {
+
+
+  return (
+    <div
+      data-slot="form-count"
+      className={cn("text-sm font-semibold", className)}
+      {...props}
+    >
+      { max ? max - length : length }
     </div>
   )
 }
@@ -235,4 +254,5 @@ export {
   FieldSet,
   FieldContent,
   FieldTitle,
+  FieldCount
 }

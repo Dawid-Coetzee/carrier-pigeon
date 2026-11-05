@@ -16,7 +16,7 @@ function Textarea({ className, label, required, rows, ...props }: Props) {
     <Label 
       className={cn(
         "group",
-        "bg-primary-button-hover hover:bg-primary-button-normal",
+        "bg-page-button-active hover:bg-input-hover",
         "font-sans text-text1 font-semibold", 
         "min-h-14 p-4 border rounded-input-rounding",
         "flex items-center gap-2", 

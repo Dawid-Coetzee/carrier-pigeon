@@ -16,27 +16,30 @@ import {
 } from "@/components/ui/dialog"
 import Button from "@/components/ui/button";
 import CommunityPreview from "./community-preview";
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldError, FieldGroup, FieldCount } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/components/ui/input-group";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
+
+const MAX_NAME_LENGTH = 21;
+const MIN_NAME_LENGTH = 3;
+const TEXTAREA_ROWS = 8;
 
 const formSchema = z.object({
-    title: z
+    name: z
     .string()
-    .min(5, "Bug title must be at least 5 characters.")
-    .max(32, "Bug title must be at most 32 characters."),
+    .min(MIN_NAME_LENGTH, `Please lengthen this text to ${MIN_NAME_LENGTH} characters or more.`),
     description: z
     .string()
-    .min(20, "Description must be at least 20 characters.")
-    .max(100, "Description must be at most 100 characters."),
 })
 
 export default function CommunityCreate() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
+        mode: "onTouched",
         defaultValues: {
-            title: "",
-            description: "",
+            name: "",
+            description: ""
         },
     })
 
@@ -64,27 +67,74 @@ export default function CommunityCreate() {
 
             {/* Preview Card */}
             <CommunityPreview banner="" avatar="" withImages={false}/>
-            <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+            <form id="create-community" onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
                     <Controller
-                    name="title"
+                    name="name"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
+                    render={({ field: { onChange, ...restFields }, fieldState }) => (
+                        <Field className="gap-1" data-invalid={fieldState.invalid}>
                             <Input
-                                {...field}
+                                {...restFields}
                                 id="community-name"
+                                prefix="p/"
                                 label="Community name"
                                 required
+                                onChange={(event) => {
+                                    const valueLength = restFields.value.length;
+
+                                    if (valueLength < MAX_NAME_LENGTH) {
+                                        onChange(event);
+                                    }
+                                }
+                                }
                                 aria-invalid={fieldState.invalid}
                             />
-                            {fieldState.invalid && (
-                                <FieldError errors={[fieldState.error]} />
-                            )}
+                            <div 
+                            className={cn(
+                                "flex flex-row-reverse gap-2 justify-between",
+                                "px-4"
+                            )}>
+                                <FieldCount 
+                                    className={fieldState.invalid ? "text-destructive" : "text-muted-foreground"} 
+                                    length={restFields.value.length} 
+                                    max={MAX_NAME_LENGTH} 
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </div>
                         </Field>
                     )}
                     />
-                    
+
+                    <Controller
+                    name="description"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                        <Field className="gap-1" data-invalid={fieldState.invalid}>
+                            <Textarea
+                                {...field}
+                                id="community-name"
+                                label="Description"
+                                rows={TEXTAREA_ROWS}
+                                required
+                                aria-invalid={fieldState.invalid}
+                            />
+                            <div 
+                            className={cn(
+                                "flex flex-row-reverse gap-2 justify-between",
+                                "px-4"
+                            )}>
+                                <FieldCount 
+                                    className={fieldState.invalid ? "text-destructive" : "text-muted-foreground"} 
+                                    length={field.value.length} 
+                                />
+                            </div>
+                        </Field>
+                        
+                    )}
+                    />
                 </FieldGroup>
             </form>
                 

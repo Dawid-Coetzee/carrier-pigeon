@@ -22,7 +22,7 @@ function Input({ className, prefix, type, label, required, ...props }: Props) {
         "h-14 px-4 border rounded-input-rounding",
         "flex items-center gap-2", 
         "focus-within:outline-2 cursor-text",
-        "has-[input[aria-invalid=true]]:outline has-[input[aria-invalid=true]]:outline-destructive",
+        "has-[input[aria-invalid=true]]:outline-2 has-[input[aria-invalid=true]]:outline-destructive",
         className
       )}>
       <div className={cn(
