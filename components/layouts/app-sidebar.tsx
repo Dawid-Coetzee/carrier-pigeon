@@ -9,11 +9,11 @@ import {
     SidebarMenuItem,
     SidebarSeparator
 } from "@/components/ui/sidebar";
-import AppSidebarMenuButton from "./app-sidebar-menu-button";
+import AppSidebarMenuLink from "./app-sidebar-menu-link";
 import AppSidebarMenuCollapsible from "./app-sidebar-menu-collapsible";
 import { Settings } from "../icons/settings";
 import CommunityNavItems from "@/features/communities/components/community-nav-items";
-import CommunityCreate from "@/features/communities/components/community-create";
+import CommunityCreateDialog from "@/features/communities/components/community-create-dialog";
 
 // Menu items.
 const items = [
@@ -52,7 +52,7 @@ export function AppSidebar() {
             <SidebarMenu>
                 {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                    <AppSidebarMenuButton {...item}/>
+                    <AppSidebarMenuLink {...item}/>
                 </SidebarMenuItem>
                 ))}
             </SidebarMenu>
@@ -64,11 +64,11 @@ export function AppSidebar() {
         <AppSidebarMenuCollapsible title="Communities">
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <CommunityCreate />
+                    <CommunityCreateDialog />
                 </SidebarMenuItem>
                 
                 <SidebarMenuItem>
-                    <AppSidebarMenuButton 
+                    <AppSidebarMenuLink 
                         title="Manage Communities" 
                         url="/communities"
                         icon={<Settings />}

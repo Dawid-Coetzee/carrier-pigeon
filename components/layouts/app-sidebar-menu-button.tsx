@@ -2,30 +2,24 @@
 
 import Link from "next/link";
 import { SidebarMenuButton } from "../ui/sidebar";
-import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
+import Plus from "../icons/plus";
+
 
 
 type Props = {
-    url: string;
     title: string;
     icon: ReactNode;
-    selected: ReactNode;
-}
+} & ComponentProps<typeof SidebarMenuButton>;
 
 
-export default function AppSidebarMenuButton({ icon, selected, title, url }: Props) {
-    const pathname = usePathname();
-    const isActive = pathname === url;
+export default function AppSidebarMenuButton({ icon, title, ...props }: Props) {
     return (
-    <SidebarMenuButton asChild isActive={isActive}>
-        <Link href={url}>
-            <span className="size-8 flex items-center justify-center">
-                {isActive ? selected : icon}
-            </span>
-            <span>{title}</span>
-        </Link>
+    <SidebarMenuButton className="cursor-pointer" {...props}>
+        <span className="size-8 flex items-center justify-center">
+            {icon}
+        </span>
+        <span>{title}</span>
     </SidebarMenuButton>
-
     )
 }
