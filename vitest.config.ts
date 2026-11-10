@@ -1,4 +1,5 @@
 import path from 'node:path';
+import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath } from 'node:url';
 
 import { defineConfig } from 'vitest/config';
@@ -12,6 +13,7 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  plugins: [tailwindcss()],
   test: {
     projects: [
       {
