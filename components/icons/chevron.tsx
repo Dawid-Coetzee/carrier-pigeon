@@ -8,8 +8,6 @@ export default function ChevronDown({ className }: IconProps) {
         fill="currentColor"
         viewBox="0 0 24 24"
         id="Navigation-Page-Right--Streamline-Freehand"
-        height="24"
-        width="24"
         style={{ transform: 'rotate(90deg)'}}
         className={cn("size-5 text-text1", className)}
     >

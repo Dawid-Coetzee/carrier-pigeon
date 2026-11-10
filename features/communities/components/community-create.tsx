@@ -151,7 +151,7 @@ export default function CommunityCreate() {
                 
             <DialogFooter className="flex-row justify-end">
                 <Button
-                    variant="secondary"
+                    variant="destructive"
                     size="lg"
                 >
                     Cancel

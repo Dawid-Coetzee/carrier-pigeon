@@ -38,12 +38,16 @@
   --color-primary-button-normal: var(--primary-button-normal);
   --color-primary-button-hover: var(--primary-button-hover);
   --color-primary-button-active: var(--primary-button-active);
-  --color-secondary-button-normal: var(--secondary-button-normal);
-  --color-secondary-button-active: var(--secondary-button-active);
+  --color-destructive-button-normal: var(--destructive-button-normal);
+  --color-destructive-button-hover: var(--destructive-button-hover);
+  --color-destructive-button-active: var(--destructive-button-active);
   --color-page-button-active: var(--page-button-active);
   --color-text2: var(--text2);
   --color-button-disabled-background: var(--button-disabled-background);
   --color-button-disabled-foreground: var(--button-disabled-foreground);
+  --color-secondary-button-normal: var(--secondary-button-normal);
+  --color-secondary-button-hover: var(--secondary-button-hover);
+  --color-secondary-button-active: var(--secondary-button-active);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -90,10 +94,14 @@
   --primary-button-normal: #b3895f;
   --primary-button-hover: #a68968;
   --primary-button-active: #831e20;
-  --secondary-button-normal: #a53f42;
-  --secondary-button-active: #ba0110;
+  --destructive-button-normal: #a53f42;
+  --destructive-button-hover: #831e20;
+  --destructive-button-active: #ba0110;
   --button-disabled-foreground: #4f4f4f;
   --button-disabled-background: #b5a89b89;
+  --secondary-button-normal: #c9a876;
+  --secondary-button-hover: #c2a77a;
+  --secondary-button-active: #c2a87acc;
   --text1: #000;
   --text2: #494949;
   --preview-card-shadow: 1px 2px 4px 2px #777;
@@ -135,8 +143,8 @@
   --primary-button-normal: #d4b488;
   --primary-button-hover: #c9a876;
   --primary-button-active: #831e20;
-  --secondary-button-normal: #a53f42;
-  --secondary-button-active: #ba0110;
+  --destructive-button-normal: #a53f42;
+  --destructive-button-active: #ba0110;
   --text1: #000;
   --text2: #050505;
 }

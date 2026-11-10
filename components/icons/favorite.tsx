@@ -8,7 +8,7 @@ export function Favorite({ className }: IconProps) {
         fill="currentColor" 
         xmlns="http://www.w3.org/2000/svg" 
         id="Wealth-Crystal-Shine--Streamline-Freehand" 
-        className={cn("size-6", className)}
+        className={cn("size-6 text-text1", className)}
     >
         <g id="wealth-crystal-shine">
             <g id="Group">
