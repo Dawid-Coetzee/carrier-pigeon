@@ -19,6 +19,7 @@ import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
 import CommunityCreateStageOne from "./community-create-stage-one";
 import { useState } from "react";
 import { CommunityCreateStage } from "../types";
+import CommunityCreateStageTwo, { CommunityMediaType } from "./community-create-stage-two";
 
 export default function CommunityCreateDialog() {
     const [stage, setStage] = useState<CommunityCreateStage>(
@@ -39,6 +40,8 @@ export default function CommunityCreateDialog() {
         name: "description",
         defaultValue: "",
     });
+    const banner = useWatch({ control, name: "banner" });
+    const avatar = useWatch({ control, name: "avatar" });
 
     const isNameInvalid = name.length < MIN_NAME_LENGTH;
     const isDescription = description.length < MIN_DESCRIPTION_LENGTH
@@ -54,8 +57,17 @@ export default function CommunityCreateDialog() {
         setStage((prev) => prev - 1);
     }
 
+    const handleFileError = (error: Error, type: CommunityMediaType) => {
+        form.resetField(type);
+        form.setError(type, {message: error.message});
+    }
+
+    const handleFileDelete = (type: CommunityMediaType) => {
+        form.resetField(type);
+    }
+
     const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
-        console.log(data)
+        console.log(data);
     };
 
     return (
@@ -91,10 +103,12 @@ export default function CommunityCreateDialog() {
                     )}
 
                     {stage === CommunityCreateStage.Two && (
-                    <CommunityCreateStageOne 
+                    <CommunityCreateStageTwo 
                         formControl={form.control} 
-                        name={name} 
-                        description={description} 
+                        banner={banner}
+                        onFileError={handleFileError}
+                        onFileDelete={handleFileDelete}
+                        avatar={avatar}
                     />
                     )}
                 </FieldGroup>
