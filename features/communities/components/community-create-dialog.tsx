@@ -22,6 +22,8 @@ import { CommunityCreateStage, CommunityImage, ReadAs } from "../types";
 import { CommunityMediaType } from "../types/index";
 import CommunityCreateStageTwo from "./community-create-stage-two";
 import { readFileAsync } from "@/lib/read-file";
+import ReactCrop, { type Crop } from 'react-image-crop'
+import Image from "next/image";
 
 
 export default function CommunityCreateDialog() {
@@ -31,6 +33,7 @@ export default function CommunityCreateDialog() {
     const [image, setImage] = useState<CommunityImage | null>(null);
     const [bannerImage, setBannerImage] = useState<string | undefined>(undefined);
     const [avatarImage, setAvatarImage] = useState<string | undefined>(undefined);
+    const [crop, setCrop] = useState<Crop>()
 
     const form = useForm<z.infer<typeof communityFormSchema>>({
         resolver: zodResolver(communityFormSchema),
@@ -126,7 +129,18 @@ export default function CommunityCreateDialog() {
             />
             )}
 
-            {isCropping && <div>Cropping</div>}
+            {isCropping && (
+                <div className="w-full min-h-cropping-container-height bg-text1 p-2 items-center justify-center">
+                    <ReactCrop crop={crop} onChange={c => setCrop(c)}>
+                        <Image 
+                            src={""} 
+                            alt="" 
+                            width={1000} 
+                            height={1000} 
+                        />
+                    </ReactCrop>
+                </div>
+            )}
 
             {/* Form */}
             {!isCropping && <form id="create-community" onSubmit={form.handleSubmit(onSubmit)}>

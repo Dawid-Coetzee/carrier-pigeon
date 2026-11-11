@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "react-image-crop/dist/ReactCrop.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -63,6 +64,7 @@
   --text-sidebar-collapsible: var(--sidebar-collapsible);
   --radius-input-rounding: var(--input-rounding);
   --text-description-text: var(--description-text);
+  --height-cropping-container-height: var(--cropping-container-height);
 }
 
 :root {
@@ -116,6 +118,7 @@
   --sidebar-collapsible: .85rem;
   --input-rounding: 20px;
   --description-text: 1.08rem;
+  --cropping-container-height: 416px;
 
 }
 
