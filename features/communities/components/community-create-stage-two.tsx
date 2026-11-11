@@ -11,9 +11,11 @@ import { cn } from "@/lib/utils";
 type Props = {
     formControl: Control<z.infer<typeof communityFormSchema>>;
     banner?: File;
+    avatar?: File;
     onFileError: (error: Error, type: CommunityMediaType) => void;
     onFileDelete: (type: CommunityMediaType) => void;
-    avatar?: File;
+    onFileChange: (file: File, type: CommunityMediaType) => void;
+    
 }
 
 const COMMUNITY_CREATE_MEDIA_TYPES = ["banner", "avatar"] as const;
@@ -22,9 +24,11 @@ export type CommunityMediaType = typeof COMMUNITY_CREATE_MEDIA_TYPES[number];
 export default function CommunityCreateStageTwo({ 
     formControl, 
     banner, 
+    avatar,
     onFileError, 
     onFileDelete,
-    avatar
+    onFileChange
+    
 }: Props) {
     return COMMUNITY_CREATE_MEDIA_TYPES.map(type => (
             <Controller
@@ -52,6 +56,7 @@ export default function CommunityCreateStageTwo({
                                         }
                                     onDrop={(files: File[]) => {
                                         onChange(files[0])
+                                        onFileChange(files[0], type);
                                     }}
                                     onError={(error) => {onFileError(error, type)}}
                                     {...restFields}

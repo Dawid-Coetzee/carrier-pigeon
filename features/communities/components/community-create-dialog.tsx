@@ -25,6 +25,9 @@ export default function CommunityCreateDialog() {
     const [stage, setStage] = useState<CommunityCreateStage>(
         CommunityCreateStage.One
     );
+    const [bannerImage, setBannerImage] = useState<string>("");
+    const [avatarImage, setAvatarImage] = useState<string>("");
+
     const form = useForm<z.infer<typeof communityFormSchema>>({
         resolver: zodResolver(communityFormSchema),
         mode: "onTouched",
@@ -55,16 +58,67 @@ export default function CommunityCreateDialog() {
     const handleBack = () => {
         //handle state of the stage
         setStage((prev) => prev - 1);
-    }
+    };
 
     const handleFileError = (error: Error, type: CommunityMediaType) => {
         form.resetField(type);
         form.setError(type, {message: error.message});
-    }
+    };
 
     const handleFileDelete = (type: CommunityMediaType) => {
         form.resetField(type);
+    };
+
+    enum ReadAs {
+        ReadAsText = "readAsText",
+        ReadAsArrayBuffer = "readAsArrayBuffer",
+        ReadAsDataURL = "readAsDataURL"
     }
+
+    const readFileAsync = (
+        file: File, 
+        readAs: ReadAs
+    ): Promise<string | ArrayBuffer | null> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const target = event.target;
+                if (target) {
+                    const result = target.result;
+
+                    resolve(result);
+                } else {
+                    reject(new Error("Invalid target"))
+                }
+            }
+
+            reader.onerror = () => {
+                reject(new Error("Something has gone wrong while reading the file"))
+            }
+
+            reader[readAs](file);
+        });
+        
+    }
+
+    const handleFile = async (file: File, type: CommunityMediaType) => {
+        try {
+            // file must be url in order to be rendered as a image
+            const result = await readFileAsync(file, ReadAs.ReadAsDataURL);
+
+            // set the value in state => bannerImage or avatarImage
+            if (typeof result === "string") {
+                if (type === "banner") setBannerImage(result);
+                if (type === "avatar") setAvatarImage(result);
+            }
+        } catch (error) {
+            // if error happens while doing it set the error to the specific form field
+            if (error instanceof Error) {
+                form.setError(type, {message: error.message})
+            }
+        }
+    };
 
     const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
         console.log(data);
@@ -85,8 +139,8 @@ export default function CommunityCreateDialog() {
             <CommunityPreview 
                 name={name} 
                 description={description} 
-                banner="" 
-                avatar="" 
+                banner={bannerImage}
+                avatar={avatarImage}
                 withImages={stage == CommunityCreateStage.Two}
             />
             )}
@@ -106,9 +160,10 @@ export default function CommunityCreateDialog() {
                     <CommunityCreateStageTwo 
                         formControl={form.control} 
                         banner={banner}
+                        avatar={avatar}
                         onFileError={handleFileError}
                         onFileDelete={handleFileDelete}
-                        avatar={avatar}
+                        onFileChange={handleFile}
                     />
                     )}
                 </FieldGroup>
