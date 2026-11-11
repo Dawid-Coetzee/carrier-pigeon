@@ -12,7 +12,7 @@ const buttonVariants = cva(cn(
         variant: {
             primary: "bg-primary-button-normal hover:bg-primary-button-hover active:bg-primary-button-active border",
             bordered: "bg-bordered-button-normal hover:bg-bordered-button-hover active:bg-bordered-button-active border-2 border-border-muted hover:border-text1 active:border-text1",
-            secondary: "bg-secondary-button-normal hover:bg-secondary-button-active active:bg-secondary-button-active",
+            secondary: "bg-secondary-button-normal hover:bg-secondary-button-active active:bg-secondary-button-active border",
             destructive: "bg-destructive-button-normal hover:bg-destructive-button-active active:bg-destructive-button-active border",
             plain: "bg-transparent hover:bg-primary-button-normal active:bg-primary-button-active",
     },

@@ -18,7 +18,6 @@ export const Default = {
         const onDrop = (acceptedFiles: File[]) => {
             setFiles(acceptedFiles)
         }
-        console.log(files);
 
         return (
             <Dropzone onDrop={onDrop}>
@@ -35,7 +34,6 @@ export const WithFiles = {
         const onDrop = (acceptedFiles: File[]) => {
             setFiles(acceptedFiles)
         }
-        console.log(files);
 
         return (
             <Dropzone src={files} onDrop={onDrop}>

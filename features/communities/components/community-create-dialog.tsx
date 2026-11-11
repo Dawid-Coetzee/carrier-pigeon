@@ -1,31 +1,29 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm, useWatch } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import * as z from "zod"
 import Plus from "@/components/icons/plus";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import Button from "@/components/ui/button";
 import CommunityPreview from "./community-preview";
-import { Field, FieldError, FieldGroup, FieldCount } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import { MAX_NAME_LENGTH, MIN_DESCRIPTION_LENGTH, MIN_NAME_LENGTH, TEXTAREA_ROWS } from "../constants";
+import { FieldGroup } from "@/components/ui/field";
+import { MIN_DESCRIPTION_LENGTH, MIN_NAME_LENGTH } from "../constants";
 import { communityFormSchema } from "../schema";
 import AppSidebarMenuButton from "@/components/layouts/app-sidebar-menu-button";
 import { CommunityCreateDialogHeader } from "./community-create-dialog-header";
 import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
+import CommunityCreateStageOne from "./community-create-stage-one";
+import { useState } from "react";
+import { CommunityCreateStage } from "../types";
 
 export default function CommunityCreateDialog() {
+    const [stage, setStage] = useState<CommunityCreateStage>(
+        CommunityCreateStage.One
+    );
     const form = useForm<z.infer<typeof communityFormSchema>>({
         resolver: zodResolver(communityFormSchema),
         mode: "onTouched",
@@ -45,9 +43,21 @@ export default function CommunityCreateDialog() {
     const isNameInvalid = name.length < MIN_NAME_LENGTH;
     const isDescription = description.length < MIN_DESCRIPTION_LENGTH
 
-    function onSubmit(data: z.infer<typeof communityFormSchema>) {
-        console.log(data)
+    const handleNext = () => {
+        //handle state of the stage
+        setStage((prev) => prev + 1);
+
+    };
+
+    const handleBack = () => {
+        //handle state of the stage
+        setStage((prev) => prev - 1);
     }
+
+    const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
+        console.log(data)
+    };
+
     return (
     <Dialog>
         <DialogTrigger asChild>
@@ -69,11 +79,31 @@ export default function CommunityCreateDialog() {
             {/* Form */}
             <form id="create-community" onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
-                    <CommunityCreateStageOne formControl={form.control} name={name} description={description} />
+                    {stage === CommunityCreateStage.One && (
+                    <CommunityCreateStageOne 
+                        formControl={form.control} 
+                        name={name} 
+                        description={description} 
+                    />
+                    )}
+
+                    {stage === CommunityCreateStage.Two && (
+                    <CommunityCreateStageOne 
+                        formControl={form.control} 
+                        name={name} 
+                        description={description} 
+                    />
+                    )}
                 </FieldGroup>
             </form>
                 
-            <CommunityCreateDialogFooter isNextDisabled={isNameInvalid || isDescription}/>
+            {/* Footer */}
+            <CommunityCreateDialogFooter 
+                stage={stage}
+                isNextDisabled={isNameInvalid || isDescription} 
+                onNextClick={handleNext}
+                onBackClick={handleBack}
+            />
         </DialogContent>
     </Dialog>
     
