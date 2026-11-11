@@ -23,3 +23,7 @@ export const COMMUNITY_CREATE_DIALOG_HEADER_TEXT = {
         description: "The avatar must be 1:1"
     }
 }
+export const COMMUNITY_IMAGE_ASPECTS = {
+    banner: 1028/128,
+    avatar: 1
+}

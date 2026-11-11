@@ -11,18 +11,18 @@ import {
 } from "@/components/ui/dialog"
 import CommunityPreview from "./community-preview";
 import { FieldGroup } from "@/components/ui/field";
-import { COMMUNITY_CREATE_DIALOG_HEADER_TEXT, MIN_DESCRIPTION_LENGTH, MIN_NAME_LENGTH } from "../constants";
+import { COMMUNITY_CREATE_DIALOG_HEADER_TEXT, COMMUNITY_IMAGE_ASPECTS, MIN_DESCRIPTION_LENGTH, MIN_NAME_LENGTH } from "../constants";
 import { communityFormSchema } from "../schema";
 import AppSidebarMenuButton from "@/components/layouts/app-sidebar-menu-button";
 import { CommunityCreateDialogHeader } from "./community-create-dialog-header";
 import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
 import CommunityCreateStageOne from "./community-create-stage-one";
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, ReactEventHandler, SyntheticEvent } from "react";
 import { CommunityCreateStage, CommunityImage, ReadAs } from "../types";
 import { CommunityMediaType } from "../types/index";
 import CommunityCreateStageTwo from "./community-create-stage-two";
 import { readFileAsync } from "@/lib/read-file";
-import ReactCrop, { type Crop } from 'react-image-crop'
+import ReactCrop, { centerCrop, makeAspectCrop, PercentCrop, PixelCrop, type Crop } from 'react-image-crop'
 import Image from "next/image";
 
 
@@ -106,6 +106,23 @@ export default function CommunityCreateDialog() {
         console.log(data);
     };
 
+    function onImageLoad(event: SyntheticEvent<HTMLImageElement>, type: CommunityMediaType) {
+        const { naturalWidth: width, naturalHeight: height } = event.currentTarget
+
+        const aspectCrop = makeAspectCrop(
+            { unit: '%',width: 100 },
+            COMMUNITY_IMAGE_ASPECTS[type],
+            width,
+            height
+        )
+
+        const crop = centerCrop(aspectCrop, width, height)
+
+    setCrop(crop)
+    }
+
+    const onCropChange = (_: PixelCrop, percentCrop: PercentCrop) => setCrop(percentCrop);
+
     return (
     <Dialog>
         <DialogTrigger asChild>
@@ -131,12 +148,15 @@ export default function CommunityCreateDialog() {
 
             {isCropping && (
                 <div className="w-full min-h-cropping-container-height bg-text1 p-2 items-center justify-center">
-                    <ReactCrop crop={crop} onChange={c => setCrop(c)}>
+                    <ReactCrop crop={crop} onChange={onCropChange} aspect={COMMUNITY_IMAGE_ASPECTS[image.type]}>
                         <Image 
                             src={""} 
                             alt="" 
                             width={1000} 
                             height={1000} 
+                            onLoad={(event) => {
+                                onImageLoad(event, image.type)
+                            }}
                         />
                     </ReactCrop>
                 </div>
