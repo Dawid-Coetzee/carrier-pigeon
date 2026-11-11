@@ -18,8 +18,10 @@ import { CommunityCreateDialogHeader } from "./community-create-dialog-header";
 import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
 import CommunityCreateStageOne from "./community-create-stage-one";
 import { useState } from "react";
-import { CommunityCreateStage } from "../types";
-import CommunityCreateStageTwo, { CommunityMediaType } from "./community-create-stage-two";
+import { CommunityCreateStage, ReadAs } from "../types";
+import { CommunityMediaType } from "../types/index";
+import CommunityCreateStageTwo from "./community-create-stage-two";
+import { readFileAsync } from "@/lib/read-file";
 
 export default function CommunityCreateDialog() {
     const [stage, setStage] = useState<CommunityCreateStage>(
@@ -69,51 +71,15 @@ export default function CommunityCreateDialog() {
         form.resetField(type);
     };
 
-    enum ReadAs {
-        ReadAsText = "readAsText",
-        ReadAsArrayBuffer = "readAsArrayBuffer",
-        ReadAsDataURL = "readAsDataURL"
-    }
-
-    const readFileAsync = (
-        file: File, 
-        readAs: ReadAs
-    ): Promise<string | ArrayBuffer | null> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = (event) => {
-                const target = event.target;
-                if (target) {
-                    const result = target.result;
-
-                    resolve(result);
-                } else {
-                    reject(new Error("Invalid target"))
-                }
-            }
-
-            reader.onerror = () => {
-                reject(new Error("Something has gone wrong while reading the file"))
-            }
-
-            reader[readAs](file);
-        });
-        
-    }
-
     const handleFile = async (file: File, type: CommunityMediaType) => {
         try {
-            // file must be url in order to be rendered as a image
             const result = await readFileAsync(file, ReadAs.ReadAsDataURL);
 
-            // set the value in state => bannerImage or avatarImage
             if (typeof result === "string") {
                 if (type === "banner") setBannerImage(result);
                 if (type === "avatar") setAvatarImage(result);
             }
         } catch (error) {
-            // if error happens while doing it set the error to the specific form field
             if (error instanceof Error) {
                 form.setError(type, {message: error.message})
             }

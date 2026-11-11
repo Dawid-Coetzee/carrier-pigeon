@@ -6,6 +6,8 @@ import { Dropzone, DropzoneButton } from "@/components/ui/dropzone";
 import Button from "@/components/ui/button";
 import Trash from "@/components/icons/trash";
 import { cn } from "@/lib/utils";
+import { COMMUNITY_MEDIA_TYPES } from "../constants";
+import { CommunityMediaType } from "../types";
 
 
 type Props = {
@@ -18,9 +20,6 @@ type Props = {
     
 }
 
-const COMMUNITY_CREATE_MEDIA_TYPES = ["banner", "avatar"] as const;
-export type CommunityMediaType = typeof COMMUNITY_CREATE_MEDIA_TYPES[number];
-
 export default function CommunityCreateStageTwo({ 
     formControl, 
     banner, 
@@ -30,7 +29,7 @@ export default function CommunityCreateStageTwo({
     onFileChange
     
 }: Props) {
-    return COMMUNITY_CREATE_MEDIA_TYPES.map(type => (
+    return COMMUNITY_MEDIA_TYPES.map(type => (
             <Controller
                 key={type}
                 name={type}
