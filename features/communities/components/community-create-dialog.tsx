@@ -17,12 +17,12 @@ import AppSidebarMenuButton from "@/components/layouts/app-sidebar-menu-button";
 import { CommunityCreateDialogHeader } from "./community-create-dialog-header";
 import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
 import CommunityCreateStageOne from "./community-create-stage-one";
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import { CommunityCreateStage, CommunityImage, ReadAs } from "../types";
 import { CommunityMediaType } from "../types/index";
 import CommunityCreateStageTwo from "./community-create-stage-two";
 import { readFileAsync } from "@/lib/read-file";
-import { FileMinus } from "lucide-react";
+
 
 export default function CommunityCreateDialog() {
     const [stage, setStage] = useState<CommunityCreateStage>(
@@ -52,6 +52,18 @@ export default function CommunityCreateDialog() {
 
     const isNameInvalid = name.length < MIN_NAME_LENGTH;
     const isDescription = description.length < MIN_DESCRIPTION_LENGTH
+    const isCropping = 
+        (stage === CommunityCreateStage.BannerStage ||
+        stage === CommunityCreateStage.AvatarStage) && 
+        !!image;
+
+    const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
+        if (isCropping) {
+            event.preventDefault();
+            setStage(CommunityCreateStage.Two);
+            setImage(null);
+        }
+    }
 
     const handleNext = () => {
         //handle state of the stage
@@ -88,11 +100,6 @@ export default function CommunityCreateDialog() {
     const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
         console.log(data);
     };
-
-    const isCropping = 
-        (stage === CommunityCreateStage.BannerStage ||
-        stage === CommunityCreateStage.AvatarStage) && 
-        !!image;
 
     return (
     <Dialog>
@@ -146,10 +153,13 @@ export default function CommunityCreateDialog() {
                 
             {/* Footer */}
             <CommunityCreateDialogFooter 
-                stage={stage}
+                isCancelable={stage === CommunityCreateStage.One || isCropping}
+                isSaveable={isCropping}
+                onSaveClick={() => {}} // TODO: add functionality
                 isNextDisabled={isNameInvalid || isDescription} 
                 onNextClick={handleNext}
                 onBackClick={handleBack}
+                onCloseClick={handleClose}
             />
         </DialogContent>
     </Dialog>

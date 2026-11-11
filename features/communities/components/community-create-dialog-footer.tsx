@@ -1,34 +1,41 @@
 import Button from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { CommunityCreateStage } from "../types";
+import { MouseEvent } from "react";
 
 type Props = {
-    stage: CommunityCreateStage;
+    isCancelable: boolean;
+    isSaveable: boolean;
     isNextDisabled: boolean;
     onNextClick: () => void;
+    onSaveClick: () => void;
     onBackClick: () => void;
+    onCloseClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function CommunityCreateDialogFooter({ 
+    isCancelable,
+    isSaveable,
     isNextDisabled, 
     onNextClick, 
+    onSaveClick,
     onBackClick, 
-    stage 
+    onCloseClick,
 }: Props) {
     return (
         <DialogFooter className="flex-row justify-end">
-            {stage === CommunityCreateStage.One && (
-            <DialogClose asChild>
-                <Button
-                    variant="destructive"
-                    size="lg"
-                >
-                    Cancel
-                </Button>
-            </DialogClose>
+            {isCancelable && (
+                <DialogClose asChild>
+                    <Button
+                        variant="destructive"
+                        size="lg"
+                        onClick={onCloseClick}
+                    >
+                        Cancel
+                    </Button>
+                </DialogClose>
         )}
 
-            {stage !== CommunityCreateStage.One && (
+            {!isCancelable && (
             <Button
                 variant="secondary"
                 size="lg"
@@ -37,14 +44,21 @@ export function CommunityCreateDialogFooter({
                 Back
             </Button>
         )}
-            <Button
+            {isSaveable && <Button
+                variant="primary"
+                size="lg"
+                onClick={onSaveClick}
+            >
+                Save
+            </Button>}
+            {!isSaveable && <Button
                 variant="primary"
                 size="lg"
                 disabled={ isNextDisabled }
                 onClick={onNextClick}
             >
                 Next
-            </Button>
+            </Button>}
         </DialogFooter>
     );
 }
