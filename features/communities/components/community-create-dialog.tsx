@@ -17,7 +17,7 @@ import AppSidebarMenuButton from "@/components/layouts/app-sidebar-menu-button";
 import { CommunityCreateDialogHeader } from "./community-create-dialog-header";
 import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
 import CommunityCreateStageOne from "./community-create-stage-one";
-import { useState, MouseEvent, ReactEventHandler, SyntheticEvent } from "react";
+import { useState, MouseEvent, ReactEventHandler, SyntheticEvent, useMemo } from "react";
 import { CommunityCreateStage, CommunityImage, ReadAs } from "../types";
 import { CommunityMediaType } from "../types/index";
 import CommunityCreateStageTwo from "./community-create-stage-two";
@@ -123,6 +123,8 @@ export default function CommunityCreateDialog() {
 
     const onCropChange = (_: PixelCrop, percentCrop: PercentCrop) => setCrop(percentCrop);
 
+    const imageURL = useMemo(() => image ? URL.createObjectURL(image.file) : "", [image]);
+
     return (
     <Dialog>
         <DialogTrigger asChild>
@@ -150,7 +152,7 @@ export default function CommunityCreateDialog() {
                 <div className="w-full min-h-cropping-container-height bg-text1 p-2 items-center justify-center">
                     <ReactCrop crop={crop} onChange={onCropChange} aspect={COMMUNITY_IMAGE_ASPECTS[image.type]}>
                         <Image 
-                            src={""} 
+                            src={imageURL} 
                             alt="" 
                             width={1000} 
                             height={1000} 
