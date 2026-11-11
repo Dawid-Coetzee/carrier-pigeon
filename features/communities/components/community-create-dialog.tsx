@@ -56,6 +56,8 @@ export default function CommunityCreateDialog() {
         (stage === CommunityCreateStage.BannerStage ||
         stage === CommunityCreateStage.AvatarStage) && 
         !!image;
+    const isPreviewVisible = (stage === CommunityCreateStage.One || 
+            stage === CommunityCreateStage.Two);
 
     const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
         if (isCropping) {
@@ -114,8 +116,7 @@ export default function CommunityCreateDialog() {
             />
 
             {/* Preview Card */}
-            {(stage === CommunityCreateStage.One || 
-            stage === CommunityCreateStage.Two) && (
+            {isPreviewVisible && (
             <CommunityPreview 
                 name={name} 
                 description={description} 
@@ -155,11 +156,11 @@ export default function CommunityCreateDialog() {
             <CommunityCreateDialogFooter 
                 isCancelable={stage === CommunityCreateStage.One || isCropping}
                 isSaveable={isCropping}
-                onSaveClick={() => {}} // TODO: add functionality
-                isNextDisabled={isNameInvalid || isDescription} 
-                onNextClick={handleNext}
-                onBackClick={handleBack}
-                onCloseClick={handleClose}
+                isNextDisabled={isNameInvalid || isDescription}
+                onSave={() => {}} // TODO: add functionality
+                onNext={handleNext}
+                onBack={handleBack}
+                onClose={handleClose}
             />
         </DialogContent>
     </Dialog>
