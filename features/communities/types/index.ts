@@ -2,7 +2,9 @@ import { COMMUNITY_MEDIA_TYPES } from "../constants";
 
 export enum CommunityCreateStage {
     One = 1,
-    Two
+    Two,
+    BannerStage = 2.1,
+    AvatarStage = 2.2,
 }
 export type CommunityMediaType = typeof COMMUNITY_MEDIA_TYPES[number];
 export enum ReadAs {
@@ -10,3 +12,7 @@ export enum ReadAs {
         ReadAsArrayBuffer = "readAsArrayBuffer",
         ReadAsDataURL = "readAsDataURL"
     }
+export type CommunityImage = {
+    file: File;
+    type: CommunityMediaType;
+}

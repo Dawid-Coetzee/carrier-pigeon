@@ -11,22 +11,24 @@ import {
 } from "@/components/ui/dialog"
 import CommunityPreview from "./community-preview";
 import { FieldGroup } from "@/components/ui/field";
-import { MIN_DESCRIPTION_LENGTH, MIN_NAME_LENGTH } from "../constants";
+import { COMMUNITY_CREATE_DIALOG_HEADER_TEXT, MIN_DESCRIPTION_LENGTH, MIN_NAME_LENGTH } from "../constants";
 import { communityFormSchema } from "../schema";
 import AppSidebarMenuButton from "@/components/layouts/app-sidebar-menu-button";
 import { CommunityCreateDialogHeader } from "./community-create-dialog-header";
 import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
 import CommunityCreateStageOne from "./community-create-stage-one";
 import { useState } from "react";
-import { CommunityCreateStage, ReadAs } from "../types";
+import { CommunityCreateStage, CommunityImage, ReadAs } from "../types";
 import { CommunityMediaType } from "../types/index";
 import CommunityCreateStageTwo from "./community-create-stage-two";
 import { readFileAsync } from "@/lib/read-file";
+import { FileMinus } from "lucide-react";
 
 export default function CommunityCreateDialog() {
     const [stage, setStage] = useState<CommunityCreateStage>(
         CommunityCreateStage.One
     );
+    const [image, setImage] = useState<CommunityImage | null>(null);
     const [bannerImage, setBannerImage] = useState<string | undefined>(undefined);
     const [avatarImage, setAvatarImage] = useState<string | undefined>(undefined);
 
@@ -72,18 +74,9 @@ export default function CommunityCreateDialog() {
     };
 
     const handleFile = async (file: File, type: CommunityMediaType) => {
-        try {
-            const result = await readFileAsync(file, ReadAs.ReadAsDataURL);
-
-            if (typeof result === "string") {
-                if (type === "banner") setBannerImage(result);
-                if (type === "avatar") setAvatarImage(result);
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                form.setError(type, {message: error.message})
-            }
-        }
+        setImage({file, type})
+        if (type === "banner") setStage(CommunityCreateStage.BannerStage);
+        if (type === "avatar") setStage(CommunityCreateStage.AvatarStage);
     };
 
     const resetField = (type: CommunityMediaType) => {
@@ -96,6 +89,11 @@ export default function CommunityCreateDialog() {
         console.log(data);
     };
 
+    const isCropping = 
+        (stage === CommunityCreateStage.BannerStage ||
+        stage === CommunityCreateStage.AvatarStage) && 
+        !!image;
+
     return (
     <Dialog>
         <DialogTrigger asChild>
@@ -103,7 +101,10 @@ export default function CommunityCreateDialog() {
         </DialogTrigger>
         <DialogContent className="border-2 rounded-2xl p-4 gap-8">
             {/* Header */}
-            <CommunityCreateDialogHeader stage={stage} />
+            <CommunityCreateDialogHeader 
+                title={COMMUNITY_CREATE_DIALOG_HEADER_TEXT[stage].title} 
+                description={COMMUNITY_CREATE_DIALOG_HEADER_TEXT[stage].description} 
+            />
 
             {/* Preview Card */}
             {(stage === CommunityCreateStage.One || 
@@ -117,8 +118,10 @@ export default function CommunityCreateDialog() {
             />
             )}
 
+            {isCropping && <div>Cropping</div>}
+
             {/* Form */}
-            <form id="create-community" onSubmit={form.handleSubmit(onSubmit)}>
+            {!isCropping && <form id="create-community" onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
                     {stage === CommunityCreateStage.One && (
                     <CommunityCreateStageOne 
@@ -139,7 +142,7 @@ export default function CommunityCreateDialog() {
                     />
                     )}
                 </FieldGroup>
-            </form>
+            </form>}
                 
             {/* Footer */}
             <CommunityCreateDialogFooter 
