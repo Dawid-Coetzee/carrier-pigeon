@@ -65,16 +65,19 @@ export default function CommunityCreateDialog() {
         </DialogTrigger>
         <DialogContent className="border-2 rounded-2xl p-4 gap-8">
             {/* Header */}
-            <CommunityCreateDialogHeader />
+            <CommunityCreateDialogHeader stage={stage} />
 
             {/* Preview Card */}
+            {(stage === CommunityCreateStage.One || 
+            stage === CommunityCreateStage.Two) && (
             <CommunityPreview 
                 name={name} 
                 description={description} 
                 banner="" 
                 avatar="" 
-                withImages={false}
+                withImages={stage == CommunityCreateStage.Two}
             />
+            )}
 
             {/* Form */}
             <form id="create-community" onSubmit={form.handleSubmit(onSubmit)}>
