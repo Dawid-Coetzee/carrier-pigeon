@@ -4,7 +4,7 @@ import { ComponentProps } from "react";
 
 type Props = Pick<
     ComponentProps<typeof Image>, 
-    "src" | "alt" | "width" | "height" | "onLoad"
+    "src" | "alt" | "width" | "height" | "onLoad" | "ref"
 > & ComponentProps<typeof ReactCrop>;
 
 export default function Cropper({
@@ -12,7 +12,8 @@ export default function Cropper({
     alt, 
     width, 
     height, 
-    onLoad, 
+    onLoad,
+    ref, 
     ...props
 }: Props) {
     return (
@@ -21,6 +22,7 @@ export default function Cropper({
                 {...props}
             >
                 <Image 
+                    ref={ref}
                     src={src} 
                     alt={alt}
                     width={width} 
