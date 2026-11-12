@@ -22,21 +22,22 @@ import { CommunityCreateStage, CommunityImage } from "../types";
 import { CommunityMediaType } from "../types/index";
 import CommunityCreateStageTwo from "./community-create-stage-two";
 import { convertToPixelCrop, PercentCrop, PixelCrop } from 'react-image-crop'
-
 import { getAspectCenterCrop } from "@/lib/cropper";
 import Cropper from "@/components/ui/cropper";
 
+type CommunityPreviewImages = {
+    banner?: string | undefined;
+    avatar?: string | undefined;
+}
 
 export default function CommunityCreateDialog() {
     const [stage, setStage] = useState<CommunityCreateStage>(
         CommunityCreateStage.One
     );
     const [image, setImage] = useState<CommunityImage | null>(null);
-    const [bannerImage, setBannerImage] = useState<string | undefined>(undefined);
-    const [avatarImage, setAvatarImage] = useState<string | undefined>(undefined);
+    const [previewImages, setPreviewImages] = useState<CommunityPreviewImages>({});
     const [percentCrop, setPercentCrop] = useState<PercentCrop>();
 
-    const canvasRef = useRef<HTMLCanvasElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
 
     const form = useForm<z.infer<typeof communityFormSchema>>({
@@ -66,9 +67,9 @@ export default function CommunityCreateDialog() {
     const isPreviewVisible = (stage === CommunityCreateStage.One || 
             stage === CommunityCreateStage.Two);
 
-    const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
+    const resetCropping = (event?: MouseEvent<HTMLButtonElement>) => {
         if (isCropping) {
-            event.preventDefault();
+            event?.preventDefault();
             setStage(CommunityCreateStage.Two);
             setImage(null);
         }
@@ -102,8 +103,8 @@ export default function CommunityCreateDialog() {
 
     const resetField = (type: CommunityMediaType) => {
         form.resetField(type);
-        if (type === "avatar") setAvatarImage(undefined);
-        if (type === "banner") setBannerImage(undefined);
+
+        setPreviewImages(prev => ({...prev, [type]: undefined}));
     }
 
     const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
@@ -143,8 +144,8 @@ export default function CommunityCreateDialog() {
             <CommunityPreview 
                 name={name} 
                 description={description} 
-                banner={bannerImage}
-                avatar={avatarImage}
+                banner={previewImages.banner}
+                avatar={previewImages.avatar}
                 withImages={stage == CommunityCreateStage.Two}
             />
             )}
@@ -199,9 +200,9 @@ export default function CommunityCreateDialog() {
                     // 2. use canvas to get cropped image using the drawImage method
                     // 2.1 with the canvas get the context
                     const imageElement = imageRef.current;
-                    const canvasElement = canvasRef.current;
-                    if (!canvasElement || !imageElement || !percentCrop) {
-                        throw new Error("Not enough information, missing canvas, image, or percentCrop")
+                    const canvasElement = document.createElement("canvas");
+                    if ( !imageElement || !percentCrop || !image ) {
+                        throw new Error("Not enough information, missing image, imageElement or percentCrop")
                     }
                     const context = canvasElement.getContext("2d");
                     
@@ -209,7 +210,7 @@ export default function CommunityCreateDialog() {
                         throw new Error("canvas context is not available!")
                     }
                     // 2.2 get the image width and height
-                    const { width, height, naturalWidth, naturalHeight } = imageElement;
+                    const { naturalWidth, naturalHeight } = imageElement;
                     // 2.3 convert percentage crop object to pixel crop
                     // 2.4 get the values of sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight
                     const {
@@ -234,12 +235,29 @@ export default function CommunityCreateDialog() {
                         sHeight
                     )
                     // 3. convert the canvas to blob
-                    // 3.1 get the cropped image url from blob so that we can render on preview card
-                    // 3.2 get the cropped image file from blob to send request to our backend to process in future
+
+                    canvasElement.toBlob((blob) => {
+                        if (!blob) {
+                            throw new Error("Conversion error: missing blob");
+                        }
+                        // 3.1 get the cropped image url from blob
+                        // 3.2 get the cropped image file from blob 
+                        const croppedImageURL = URL.createObjectURL(blob);
+                        const croppedImageFile = new File([blob], image.file.name, { 
+                            type: image.file.type, 
+                        })
+                        // 3.3 set the file to the form to send request to our backend to process in future
+                        form.setValue(image.type, croppedImageFile);
+                        // 3.4 set the image url state so that we can render on preview card
+                        setPreviewImages(prev => ({...prev, [image.type]: croppedImageURL}))
+                        
+                        resetCropping();
+                    })
+                    
                 }} // TODO: add functionality
                 onNext={handleNext}
                 onBack={handleBack}
-                onClose={handleClose}
+                onClose={resetCropping}
             />
         </DialogContent>
     </Dialog>
