@@ -19,27 +19,23 @@ import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
 import CommunityCreateStageOne from "./community-create-stage-one";
 import { useState, MouseEvent, SyntheticEvent, useMemo, useRef } from "react";
 import { CommunityCreateStage, CommunityImage } from "../types";
-import { CommunityMediaType } from "../types/index";
+import { CommunityMediaType, CommunityPreviewImages } from "../types/index";
 import CommunityCreateStageTwo from "./community-create-stage-two";
 import { convertToPixelCrop, PercentCrop, PixelCrop } from 'react-image-crop'
 import { getAspectCenterCrop } from "@/lib/cropper";
 import Cropper from "@/components/ui/cropper";
-
-type CommunityPreviewImages = {
-    banner?: string | undefined;
-    avatar?: string | undefined;
-}
+import useStage from "@/hooks/use-stage";
 
 export default function CommunityCreateDialog() {
-    const [stage, setStage] = useState<CommunityCreateStage>(
-        CommunityCreateStage.One
-    );
-    const [image, setImage] = useState<CommunityImage | null>(null);
-    const [previewImages, setPreviewImages] = useState<CommunityPreviewImages>({});
-    const [percentCrop, setPercentCrop] = useState<PercentCrop>();
+    // moving to stage
+    const { 
+        stage, 
+        handleBack, 
+        handleNext, 
+        moveTo 
+    } = useStage<CommunityCreateStage>({ initialState: CommunityCreateStage.One });
 
-    const imageRef = useRef<HTMLImageElement>(null);
-
+    // form
     const form = useForm<z.infer<typeof communityFormSchema>>({
         resolver: zodResolver(communityFormSchema),
         mode: "onTouched",
@@ -48,43 +44,52 @@ export default function CommunityCreateDialog() {
             description: ""
         },
     })
-    const { control } = form;
-    const name = useWatch({ control, name: "name", defaultValue: "" });
-    const description = useWatch({
-        control,
-        name: "description",
-        defaultValue: "",
-    });
-    const banner = useWatch({ control, name: "banner" });
-    const avatar = useWatch({ control, name: "avatar" });
 
+    const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
+        console.log(data);
+    };
+    
+    // stage 1
+    const { name, description } = form.watch();
     const isNameInvalid = name.length < MIN_NAME_LENGTH;
-    const isDescription = description.length < MIN_DESCRIPTION_LENGTH
+    const isDescription = description.length < MIN_DESCRIPTION_LENGTH;
+    const isPreviewVisibleStage1 = stage === CommunityCreateStage.One;
+
+    // cropper
+    const [image, setImage] = useState<CommunityImage | null>(null);
+    const [previewImages, setPreviewImages] = useState<CommunityPreviewImages>({});
+    const [percentCrop, setPercentCrop] = useState<PercentCrop>();
     const isCropping = 
         (stage === CommunityCreateStage.BannerStage ||
         stage === CommunityCreateStage.AvatarStage) && 
         !!image;
-    const isPreviewVisible = (stage === CommunityCreateStage.One || 
-            stage === CommunityCreateStage.Two);
-
     const resetCropping = (event?: MouseEvent<HTMLButtonElement>) => {
         if (isCropping) {
             event?.preventDefault();
-            setStage(CommunityCreateStage.Two);
+            moveTo(CommunityCreateStage.Two);
             setImage(null);
         }
-    }
-
-    const handleNext = () => {
-        //handle state of the stage
-        setStage((prev) => prev + 1);
-
     };
+    const onImageLoad = (event: SyntheticEvent<HTMLImageElement>, type: CommunityMediaType) => {
+        const { naturalWidth: width, naturalHeight: height } = event.currentTarget
 
-    const handleBack = () => {
-        //handle state of the stage
-        setStage((prev) => prev - 1);
+        const aspectCenterCrop = getAspectCenterCrop(
+            COMMUNITY_IMAGE_ASPECTS[type],
+            width,
+            height
+        )
+
+        setPercentCrop(aspectCenterCrop)
     };
+    const onCropChange = (_: PixelCrop, percentCrop: PercentCrop) => setPercentCrop(percentCrop);
+    const imageURL = useMemo(() => image ? URL.createObjectURL(image.file) : "", [image]);
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    
+
+    // stage 2
+    const { banner, avatar } = form.watch();
+    const isPreviewVisibleStage2 = stage === CommunityCreateStage.Two;
 
     const handleFileError = (error: Error, type: CommunityMediaType) => {
         resetField(type)
@@ -97,8 +102,8 @@ export default function CommunityCreateDialog() {
 
     const handleFile = async (file: File, type: CommunityMediaType) => {
         setImage({file, type})
-        if (type === "banner") setStage(CommunityCreateStage.BannerStage);
-        if (type === "avatar") setStage(CommunityCreateStage.AvatarStage);
+        if (type === "banner") moveTo(CommunityCreateStage.BannerStage);
+        if (type === "avatar") moveTo(CommunityCreateStage.AvatarStage);
     };
 
     const resetField = (type: CommunityMediaType) => {
@@ -106,26 +111,6 @@ export default function CommunityCreateDialog() {
 
         setPreviewImages(prev => ({...prev, [type]: undefined}));
     }
-
-    const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
-        console.log(data);
-    };
-
-    const onImageLoad = (event: SyntheticEvent<HTMLImageElement>, type: CommunityMediaType) => {
-        const { naturalWidth: width, naturalHeight: height } = event.currentTarget
-
-        const aspectCenterCrop = getAspectCenterCrop(
-            COMMUNITY_IMAGE_ASPECTS[type],
-            width,
-            height
-        )
-
-        setPercentCrop(aspectCenterCrop)
-    };
-
-    const onCropChange = (_: PixelCrop, percentCrop: PercentCrop) => setPercentCrop(percentCrop);
-
-    const imageURL = useMemo(() => image ? URL.createObjectURL(image.file) : "", [image]);
 
     return (
     <Dialog>
@@ -140,7 +125,7 @@ export default function CommunityCreateDialog() {
             />
 
             {/* Preview Card */}
-            {isPreviewVisible && (
+            {(isPreviewVisibleStage1 || isPreviewVisibleStage2) && (
             <CommunityPreview 
                 name={name} 
                 description={description} 
