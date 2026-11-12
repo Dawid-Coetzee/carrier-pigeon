@@ -1,8 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, useWatch } from "react-hook-form"
-import * as z from "zod"
 import Plus from "@/components/icons/plus";
 import {
     Dialog,
@@ -12,7 +9,6 @@ import {
 import CommunityPreview from "./community-preview";
 import { FieldGroup } from "@/components/ui/field";
 import { COMMUNITY_CREATE_DIALOG_HEADER_TEXT, COMMUNITY_IMAGE_ASPECTS, MIN_DESCRIPTION_LENGTH, MIN_NAME_LENGTH } from "../constants";
-import { communityFormSchema } from "../schema";
 import AppSidebarMenuButton from "@/components/layouts/app-sidebar-menu-button";
 import { CommunityCreateDialogHeader } from "./community-create-dialog-header";
 import { CommunityCreateDialogFooter } from "./community-create-dialog-footer";
@@ -25,6 +21,8 @@ import { convertToPixelCrop, PercentCrop, PixelCrop } from 'react-image-crop'
 import { getAspectCenterCrop } from "@/lib/cropper";
 import Cropper from "@/components/ui/cropper";
 import useStage from "@/hooks/use-stage";
+import UseCommunityCreateForm from "../hooks/use-community-create-form";
+import useCommunityCreateStageOne from "../hooks/use-community-create-stage1";
 
 export default function CommunityCreateDialog() {
     // moving to stage
@@ -36,24 +34,15 @@ export default function CommunityCreateDialog() {
     } = useStage<CommunityCreateStage>({ initialState: CommunityCreateStage.One });
 
     // form
-    const form = useForm<z.infer<typeof communityFormSchema>>({
-        resolver: zodResolver(communityFormSchema),
-        mode: "onTouched",
-        defaultValues: {
-            name: "",
-            description: ""
-        },
-    })
-
-    const onSubmit = (data: z.infer<typeof communityFormSchema>) => {
-        console.log(data);
-    };
+    const { form, onSubmit } = UseCommunityCreateForm();
     
     // stage 1
-    const { name, description } = form.watch();
-    const isNameInvalid = name.length < MIN_NAME_LENGTH;
-    const isDescription = description.length < MIN_DESCRIPTION_LENGTH;
-    const isPreviewVisibleStage1 = stage === CommunityCreateStage.One;
+    const {
+        name, 
+        description, 
+        isStageOneInvalid,
+        isPreviewVisibleStageOne 
+    } = useCommunityCreateStageOne({ form, stage });
 
     // cropper
     const [image, setImage] = useState<CommunityImage | null>(null);
@@ -89,7 +78,7 @@ export default function CommunityCreateDialog() {
 
     // stage 2
     const { banner, avatar } = form.watch();
-    const isPreviewVisibleStage2 = stage === CommunityCreateStage.Two;
+    const isPreviewVisibleStageTwo = stage === CommunityCreateStage.Two;
 
     const handleFileError = (error: Error, type: CommunityMediaType) => {
         resetField(type)
@@ -125,7 +114,7 @@ export default function CommunityCreateDialog() {
             />
 
             {/* Preview Card */}
-            {(isPreviewVisibleStage1 || isPreviewVisibleStage2) && (
+            {(isPreviewVisibleStageOne || isPreviewVisibleStageTwo) && (
             <CommunityPreview 
                 name={name} 
                 description={description} 
@@ -179,7 +168,7 @@ export default function CommunityCreateDialog() {
             <CommunityCreateDialogFooter 
                 isCancelable={stage === CommunityCreateStage.One || isCropping}
                 isSaveable={isCropping}
-                isNextDisabled={isNameInvalid || isDescription}
+                isNextDisabled={isStageOneInvalid}
                 onSave={() => {
                     // 1. get the image, canvas, and percent crop size
                     // 2. use canvas to get cropped image using the drawImage method
