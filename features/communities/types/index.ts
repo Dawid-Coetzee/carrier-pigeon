@@ -12,11 +12,3 @@ export enum ReadAs {
         ReadAsArrayBuffer = "readAsArrayBuffer",
         ReadAsDataURL = "readAsDataURL"
     }
-export type CommunityImage = {
-    file: File;
-    type: CommunityMediaType;
-}
-export type CommunityPreviewImages = {
-    banner?: string | undefined;
-    avatar?: string | undefined;
-}

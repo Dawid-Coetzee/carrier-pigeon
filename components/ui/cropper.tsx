@@ -17,7 +17,7 @@ export default function Cropper({
     ...props
 }: Props) {
     return (
-        <div className="w-full min-h-cropping-container-height bg-text1 p-2 items-center justify-center">
+        <div className="w-full min-h-cropping-container-height bg-text1 p-2 flex items-center justify-center">
             <ReactCrop 
                 {...props}
             >

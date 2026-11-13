@@ -7,7 +7,7 @@ type Props = {
     isSaveable: boolean;
     isNextDisabled: boolean;
     onNext: () => void;
-    onSave: () => void;
+    onSave?: () => void;
     onBack: () => void;
     onClose: (event: MouseEvent<HTMLButtonElement>) => void;
 }
