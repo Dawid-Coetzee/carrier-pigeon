@@ -13,12 +13,12 @@ export default function useCommunityCreateStageOne ({ form, stage}: Options) {
     const { name, description } = form.watch();
     const isNameInvalid = name.length < MIN_NAME_LENGTH;
     const isDescriptionInvalid = description.length < MIN_DESCRIPTION_LENGTH;
-    const isPreviewVisibleStageOne = stage === CommunityCreateStage.One;
+    const isStageOne = stage === CommunityCreateStage.One;
 
     return { 
         name, 
         description, 
-        isStageOneInvalid: isPreviewVisibleStageOne && (isNameInvalid || isDescriptionInvalid), 
-        isPreviewVisibleStageOne 
+        isStageOneInvalid: isStageOne && (isNameInvalid || isDescriptionInvalid), 
+        isStageOne 
     };
 }
