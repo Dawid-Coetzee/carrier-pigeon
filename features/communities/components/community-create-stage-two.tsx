@@ -36,7 +36,7 @@ export default function CommunityCreateStageTwo({
                 control={formControl}
                 render={({ fieldState }) => (
                     <Field className="gap-0.5" data-invalid={fieldState.invalid}>
-                        <div 
+                        <div
                             className={cn(
                                 "py-2 px-4 text-sm rounded-sm", 
                                 "flex items-center justify-between", 

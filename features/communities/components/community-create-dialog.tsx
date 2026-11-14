@@ -23,7 +23,7 @@ import useCommunityCreateStageTwo from "../hooks/use-community-create-stage-two"
 
 export default function CommunityCreateDialog() {
     const { 
-        stage, 
+        stage,
         handleBack, 
         handleNext, 
         moveTo 

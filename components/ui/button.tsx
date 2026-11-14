@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from '@/lib/utils';
 
-const buttonVariants = cva(cn(
+export const buttonVariants = cva(cn(
     "flex items-center justify-center gap-2",
     "cursor-pointer rounded-full text-button-text text-text1 font-semibold", 
     "data-[shape='circle']:px-0",
@@ -12,8 +12,8 @@ const buttonVariants = cva(cn(
         variant: {
             primary: "bg-primary-button-normal hover:bg-primary-button-hover active:bg-primary-button-active border",
             bordered: "bg-bordered-button-normal hover:bg-bordered-button-hover active:bg-bordered-button-active border-2 border-border-muted hover:border-text1 active:border-text1",
-            secondary: "bg-secondary-button-normal hover:bg-secondary-button-active active:bg-secondary-button-active border",
-            destructive: "bg-destructive-button-normal hover:bg-destructive-button-active active:bg-destructive-button-active border",
+            secondary: "bg-secondary-button-normal hover:bg-secondary-button-hover active:bg-secondary-button-active border",
+            destructive: "bg-destructive-button-normal hover:bg-destructive-button-hover active:bg-destructive-button-active border",
             plain: "bg-transparent hover:bg-primary-button-normal active:bg-primary-button-active",
     },
         size: {
