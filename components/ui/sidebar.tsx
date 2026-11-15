@@ -26,7 +26,7 @@ import Bar3 from "../icons/bar3"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "16rem"
+const SIDEBAR_WIDTH = "18rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_WIDTH_ICON = "3rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
@@ -244,7 +244,10 @@ function Sidebar({
         data-slot="sidebar-container"
         data-side={side}
         className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear data-[side=left]:left-0 data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width) data-[side=right]:right-0 data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width) md:flex",
+          "fixed inset-y-0 p-0 top-14 z-10 hidden h-svh w-(--sidebar-width) data-[side=left]:left-0 data-[side=right]:right-0 md:flex",
+          "transition-transform ease-in-out duration-500 group-data-[state=collapsed]:duration-300",
+          "group-data-[side=left]:group-data-[collapsible=offcanvas]:-translate-x-(--sidebar-width)",
+          "group-data-[side=right]:group-data-[collapsible=offcanvas]:translate-x-(--sidebar-width)",
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"

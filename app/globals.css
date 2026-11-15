@@ -52,6 +52,7 @@
   --color-bordered-button-hover: var(--bordered-button-hover);
   --color-bordered-button-active: var(--bordered-button-active);
   --color-border-muted: var(--border-muted);
+  --color-border: var(--border);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -111,6 +112,7 @@
   --bordered-button-hover: transparent;
   --bordered-button-active: #c2a77a;
   --border-muted: #383838;
+  --border: #000;
   --text1: #000;
   --text2: #494949;
   --preview-card-shadow: 1px 2px 4px 2px #777;

@@ -32,10 +32,12 @@ export const buttonVariants = cva(cn(
 type ButtonProps = ComponentProps<"button"> &
     VariantProps<typeof buttonVariants> & {
         isIcon?: boolean;
+        isLoading?: boolean;
     };
 
 export default function Button({ 
     isIcon = false, 
+    isLoading,
     variant, 
     className,
     size, 
@@ -46,6 +48,7 @@ export default function Button({
         className={cn(buttonVariants({ variant, size}), className)}
         data-shape={isIcon ? "circle": "pill"}
         {...buttonProps} 
+        disabled={isLoading}
     />
     );
 }
