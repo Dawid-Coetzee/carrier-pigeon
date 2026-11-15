@@ -10,11 +10,9 @@ import { cn } from "@/lib/utils";
 
 type Props = {
     formControl: Control<z.infer<typeof communityFormSchema>>;
-    name: string;
-    description: string;
 }
 
-export default function CommunityCreateStageOne({ formControl, name, description }: Props) {
+export default function CommunityCreateStageOne({ formControl }: Props) {
     return (
         <>
             <Controller

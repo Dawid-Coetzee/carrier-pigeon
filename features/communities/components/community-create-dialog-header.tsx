@@ -1,13 +1,13 @@
+import type { ReactNode } from "react";
 import { 
     DialogDescription, 
     DialogHeader, 
     DialogTitle 
 } from "@/components/ui/dialog";
-import { CommunityCreateStage } from "../types";
 
 type Props = {
     title: string;
-    description: string;
+    description: ReactNode;
 }
 
 

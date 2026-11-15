@@ -3,19 +3,23 @@ import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { MouseEvent } from "react";
 
 type Props = {
+    name: string;
     isCancelable: boolean;
     isSaveable: boolean;
     isNextDisabled: boolean;
+    isStageFour: boolean;
     onNext: () => void;
     onSave?: () => void;
     onBack: () => void;
     onClose: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export function CommunityCreateDialogFooter({ 
+export function CommunityCreateDialogFooter({
+    name,
     isCancelable,
     isSaveable,
     isNextDisabled, 
+    isStageFour,
     onNext, 
     onSave,
     onBack, 
@@ -23,7 +27,7 @@ export function CommunityCreateDialogFooter({
 }: Props) {
     return (
         <DialogFooter className="flex-row justify-end">
-            {isCancelable && (
+            {(isCancelable && !isStageFour) && (
                 <DialogClose asChild>
                     <Button
                         variant="destructive"
@@ -35,7 +39,7 @@ export function CommunityCreateDialogFooter({
                 </DialogClose>
         )}
 
-            {!isCancelable && (
+            {(!isCancelable && !isStageFour) && (
             <Button
                 variant="secondary"
                 size="lg"
@@ -44,20 +48,26 @@ export function CommunityCreateDialogFooter({
                 Back
             </Button>
         )}
-            {isSaveable && <Button
+            {(isSaveable && !isStageFour) && <Button
                 variant="primary"
                 size="lg"
                 onClick={onSave}
             >
                 Save
             </Button>}
-            {!isSaveable && <Button
+            {(!isSaveable && !isStageFour) && <Button
                 variant="primary"
                 size="lg"
                 disabled={ isNextDisabled }
                 onClick={onNext}
             >
                 Next
+            </Button>}
+            {isStageFour && <Button
+                variant="bordered"
+                size="lg"
+            >
+                <a href={`/p/${name}`}>Go to Community Page</a>
             </Button>}
         </DialogFooter>
     );

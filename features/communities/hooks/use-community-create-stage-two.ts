@@ -79,6 +79,11 @@ export default function useCommunityCreateStageTwo ({ form, stage, moveTo }: Opt
         }
     }
 
+    const resetMedia = () => {
+        bannerCropper.removeCroppedImage();
+        avatarCropper.removeCroppedImage();
+    }
+
     const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
         if (isCropping) {
             event?.preventDefault();
@@ -99,5 +104,6 @@ export default function useCommunityCreateStageTwo ({ form, stage, moveTo }: Opt
         handleFile,
         handleFileDelete,
         handleFileError,
+        resetMedia
     };
 }

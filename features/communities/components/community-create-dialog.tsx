@@ -21,12 +21,13 @@ import UseCommunityCreateForm from "../hooks/use-community-create-form";
 import useCommunityCreateStageOne from "../hooks/use-community-create-stage-one";
 import useCommunityCreateStageTwo from "../hooks/use-community-create-stage-two";
 import CommunityCreateStageThree from "./community-create-stage-three";
+import CommunityCreateStageFour from "./community-create-stage-four";
 
 export default function CommunityCreateDialog() {
     const { 
         stage,
         handleBack, 
-        handleNext, 
+        handleNext,
         moveTo 
     } = useStage<CommunityCreateStage>({ initialState: CommunityCreateStage.One });
 
@@ -50,15 +51,26 @@ export default function CommunityCreateDialog() {
         handleClose,
         handleFile,
         handleFileDelete,
-        handleFileError
+        handleFileError,
+        resetMedia
     } = useCommunityCreateStageTwo({
         form,
         stage,
         moveTo
     })
 
+    const isStageFour = stage === CommunityCreateStage.Four;
+
     return (
-    <Dialog>
+    <Dialog
+        onOpenChange={(open) => {
+            if (!open && isStageFour) {
+                form.reset();
+                resetMedia();
+                moveTo(CommunityCreateStage.One);
+            }
+        }}
+    >
         <DialogTrigger asChild>
             <AppSidebarMenuButton title="Create Community" icon={<Plus className="size-6"/>}/>
         </DialogTrigger>
@@ -70,13 +82,13 @@ export default function CommunityCreateDialog() {
             />
 
             {/* Preview Card */}
-            {(isStageOne || isStageTwo) && (
+            {(isStageOne || isStageTwo || isStageFour) && (
             <CommunityPreview 
                 name={name} 
                 description={description} 
                 banner={croppedBanner}
                 avatar={croppedAvatar}
-                withImages={stage == CommunityCreateStage.Two}
+                withImages={stage == CommunityCreateStage.Two || stage === CommunityCreateStage.Four}
             />
             )}
 
@@ -88,8 +100,6 @@ export default function CommunityCreateDialog() {
                     {stage === CommunityCreateStage.One && (
                     <CommunityCreateStageOne 
                         formControl={form.control} 
-                        name={name} 
-                        description={description} 
                     />
                     )}
 
@@ -109,14 +119,22 @@ export default function CommunityCreateDialog() {
                             formControl={form.control}
                         />
                     )}
+
+                    {isStageFour && (
+                        <CommunityCreateStageFour 
+                            name={name}
+                        />
+                    )}                    
                 </FieldGroup>
             </form>}
                 
             {/* Footer */}
-            <CommunityCreateDialogFooter 
+            <CommunityCreateDialogFooter
+                name={name}
                 isCancelable={stage === CommunityCreateStage.One || isCropping}
                 isSaveable={isCropping}
                 isNextDisabled={isStageOneInvalid}
+                isStageFour={isStageFour}
                 onSave={activeCropper?.cropImage}
                 onNext={handleNext}
                 onBack={handleBack}

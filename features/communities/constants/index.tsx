@@ -28,6 +28,16 @@ export const COMMUNITY_CREATE_DIALOG_HEADER_TEXT = {
         title: "On the Nature and Purpose of Your Community",
         description: "Choose a Subject by Which Pigeons May Discover Your Community"
     },
+    [CommunityCreateStage.Four]: {
+        title: "Behold, the Community Is Born!",
+        description: (
+            <>
+                <strong>Hark, you ought to be informed.</strong>
+                <br />
+                Pray, I have arranged certain settings to aid your beginnings, which you may view and amend at any hour through your moderator's tools.
+            </>
+        )
+    },
 }
 export const COMMUNITY_IMAGE_ASPECTS = {
     banner: 1028/128,

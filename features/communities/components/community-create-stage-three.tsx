@@ -155,7 +155,7 @@ export default function CommunityCreateStageThree({ formControl }: Props) {
                                 aria-pressed={isSelected}
                                 onClick={(event) => {
                                     event.preventDefault();
-                                    toggleSelected(name);
+                                    toggleSelected(name); 
                                 }}
                             >
                                 {isSelected ? <Checkmark className="size-5 aria-hidden"/> : null}

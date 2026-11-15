@@ -6,6 +6,7 @@ export enum CommunityCreateStage {
     BannerStage = 2.1,
     AvatarStage = 2.2,
     Three = 3,
+    Four,
 }
 export type CommunityMediaType = typeof COMMUNITY_MEDIA_TYPES[number];
 export enum ReadAs {
