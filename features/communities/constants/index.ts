@@ -2,6 +2,8 @@ import { CommunityCreateStage } from "../types";
 
 export const MAX_NAME_LENGTH = 21;
 export const MIN_NAME_LENGTH = 3;
+export const MIN_SELECTED_BUTTONS = 1;
+export const MAX_SELECTED_BUTTONS = 3;
 export const TEXTAREA_ROWS = 8;
 export const MIN_DESCRIPTION_LENGTH = 1;
 export const COMMUNITY_MEDIA_TYPES = ["banner", "avatar"] as const;
@@ -21,7 +23,11 @@ export const COMMUNITY_CREATE_DIALOG_HEADER_TEXT = {
     [CommunityCreateStage.AvatarStage]: {
         title: "Adorn your community",
         description: "The avatar must be 1:1"
-    }
+    },
+    [CommunityCreateStage.Three]: {
+        title: "On the Nature and Purpose of Your Community",
+        description: "Choose a Subject by Which Pigeons May Discover Your Community"
+    },
 }
 export const COMMUNITY_IMAGE_ASPECTS = {
     banner: 1028/128,

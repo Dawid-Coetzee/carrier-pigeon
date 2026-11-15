@@ -4,17 +4,18 @@ import { cn } from '@/lib/utils';
 
 export const buttonVariants = cva(cn(
     "flex items-center justify-center gap-2",
-    "cursor-pointer rounded-full text-button-text text-text1 font-semibold", 
+    "cursor-pointer rounded-full text-button-text text-text1 font-semibold border", 
     "data-[shape='circle']:px-0",
     "disabled:bg-button-disabled-background disabled:text-button-disabled-foreground disabled:cursor-not-allowed disabled:border-button-disabled-foreground"
 ), {
     variants: {
         variant: {
-            primary: "bg-primary-button-normal hover:bg-primary-button-hover active:bg-primary-button-active border",
+            primary: "bg-primary-button-normal hover:bg-primary-button-hover active:bg-primary-button-active active:text-white",
             bordered: "bg-bordered-button-normal hover:bg-bordered-button-hover active:bg-bordered-button-active border-2 border-border-muted hover:border-text1 active:border-text1",
-            secondary: "bg-secondary-button-normal hover:bg-secondary-button-hover active:bg-secondary-button-active border",
-            destructive: "bg-destructive-button-normal hover:bg-destructive-button-hover active:bg-destructive-button-active border",
-            plain: "bg-transparent hover:bg-primary-button-normal active:bg-primary-button-active",
+            secondary: "bg-secondary-button-normal hover:bg-secondary-button-hover active:bg-secondary-button-active",
+            destructive: "bg-destructive-button-normal hover:bg-destructive-button-hover active:bg-destructive-button-active",
+            selected: "bg-primary-button-active text-white",
+            plain: "bg-transparent hover:bg-primary-button-normal active:bg-primary-button-active border-0",
     },
         size: {
             sm: cn("h-8 px-3 text-xs", "data-[shape='circle']:size-8"),

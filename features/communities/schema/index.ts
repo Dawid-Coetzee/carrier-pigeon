@@ -27,4 +27,5 @@ export const communityFormSchema = z.object({
             "image/svg+xml"
         ], { error: "Invalid MIME type" })
         .optional(),
+    selectedButtons: z.set(z.string()).optional()
 })

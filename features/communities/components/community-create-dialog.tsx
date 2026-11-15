@@ -20,6 +20,7 @@ import useStage from "@/hooks/use-stage";
 import UseCommunityCreateForm from "../hooks/use-community-create-form";
 import useCommunityCreateStageOne from "../hooks/use-community-create-stage-one";
 import useCommunityCreateStageTwo from "../hooks/use-community-create-stage-two";
+import CommunityCreateStageThree from "./community-create-stage-three";
 
 export default function CommunityCreateDialog() {
     const { 
@@ -101,6 +102,12 @@ export default function CommunityCreateDialog() {
                         onFileDelete={handleFileDelete}
                         onFileChange={handleFile}
                     />
+                    )}
+
+                    {stage === CommunityCreateStage.Three && (
+                        <CommunityCreateStageThree
+                            formControl={form.control}
+                        />
                     )}
                 </FieldGroup>
             </form>}

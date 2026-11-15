@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { SidebarMenuButton } from "../ui/sidebar";
 import { ComponentProps, ReactNode } from "react";
-import Plus from "../icons/plus";
 
 
 
