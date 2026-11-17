@@ -3,6 +3,7 @@ import { AppSidebar } from "@/src/components/layouts/app-sidebar";
 import Header from "@/src/components/layouts/header";
 import { SidebarProvider} from "@/src/components/ui/sidebar";
 import { MedievalSharp } from "next/font/google";
+import { Toaster } from "@/src/components/ui/sonner"
 
 const medieval_sharp = MedievalSharp({
   weight: "400",
@@ -33,6 +34,7 @@ export default function RootLayout({
             {children}
           </main>
         </SidebarProvider>
+        <Toaster />
       </body>
     </html>
   );

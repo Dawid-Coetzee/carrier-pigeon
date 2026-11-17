@@ -51,6 +51,9 @@
   --color-bordered-button-normal: var(--bordered-button-normal);
   --color-bordered-button-hover: var(--bordered-button-hover);
   --color-bordered-button-active: var(--bordered-button-active);
+  --color-login-button-normal: var(--login-button-normal);;
+  --color-login-button-hover:	var(--login-button-hover);;
+  --color-login-button-active: var(--login-button-active);;
   --color-border-muted: var(--border-muted);
   --color-border: var(--border);
   --radius-sm: calc(var(--radius) * 0.6);
@@ -111,6 +114,9 @@
   --bordered-button-normal: transparent;
   --bordered-button-hover: transparent;
   --bordered-button-active: #c2a77a;
+  --login-button-normal: #F0E7DF;
+  --login-button-hover:	#EDE7E1;
+  --login-button-active: #E6D2D2;
   --border-muted: #383838;
   --border: #000;
   --text1: #000;

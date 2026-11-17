@@ -1,19 +1,24 @@
-import { PrismaClient } from '@prisma/client'
-import "server-only"
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
+import "server-only";
 
 declare global {
-  // eslint-disable-next-line no-var, no-unused-vars
-    var cachedPrisma: PrismaClient
+  // eslint-disable-next-line no-var
+  var cachedPrisma: PrismaClient | undefined;
 }
 
-let prisma: PrismaClient
-if (process.env.NODE_ENV === 'production') {
-    prisma = new PrismaClient()
-} else {
-    if (!global.cachedPrisma) {
-    global.cachedPrisma = new PrismaClient()
-    }
-    prisma = global.cachedPrisma
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL must be set to connect to the database.");
 }
 
-export const db = prisma
+const createPrismaClient = () =>
+  new PrismaClient({
+    adapter: new PrismaPg({ connectionString: databaseUrl }),
+  });
+
+export const db =
+  process.env.NODE_ENV === "production"
+    ? createPrismaClient()
+    : (global.cachedPrisma ??= createPrismaClient());

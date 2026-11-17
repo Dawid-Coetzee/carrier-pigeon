@@ -15,6 +15,7 @@ export const buttonVariants = cva(cn(
             secondary: "bg-secondary-button-normal hover:bg-secondary-button-hover active:bg-secondary-button-active",
             destructive: "bg-destructive-button-normal hover:bg-destructive-button-hover active:bg-destructive-button-active",
             selected: "bg-primary-button-active text-white",
+            login: " bg-login-button-normal hover:bg-login-button-hover active:bg-login-button-active",
             plain: "bg-transparent hover:bg-primary-button-normal active:bg-primary-button-active border-0",
     },
         size: {
