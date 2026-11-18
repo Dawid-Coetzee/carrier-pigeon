@@ -45,6 +45,6 @@ export const Error = {
   } satisfies Story;
 export const Prefix = {
   args: {
-    prefix: "p/"
+    prefix: "c/"
   }
   } satisfies Story;

@@ -68,7 +68,7 @@ export function CommunityCreateDialogFooter({
                 variant="bordered"
                 size="lg"
             >
-                <Link href={`/p/${name}`}>Go to Community Page</Link>
+                <Link href={`/c/${name}`}>Go to Community Page</Link>
             </Button>}
         </DialogFooter>
     );

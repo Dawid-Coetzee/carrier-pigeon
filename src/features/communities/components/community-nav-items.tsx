@@ -7,8 +7,8 @@ import CommunityFavoriteButton from "./community-favorite-button"
 const MOCK_COMMUNITIES = [ 
     {
         id: 0,
-        title: "p/carrier", 
-        url: "p/carrier", 
+        title: "c/carrier", 
+        url: "c/carrier", 
         avatar: "", 
         isFavorite: true, 
         color: "red"

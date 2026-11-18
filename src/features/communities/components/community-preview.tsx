@@ -43,7 +43,7 @@ export default function communityPreview({name, description, withImages, banner,
                 )}
                 
                 <div>
-                    <CardTitle className="text-black font-semibold text-xl mb-1">p/{name || "communityname"}</CardTitle>
+                    <CardTitle className="text-black font-semibold text-xl mb-1">c/{name || "communityname"}</CardTitle>
                     <p className="text-md">1 member · 1 online</p>
                 </div>
             </CardHeader>
