@@ -8,7 +8,7 @@ const SignIn = () => {
     return (
         <div
             className={cn(
-                "container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-100",
+                "container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-100 md:w-full bg-primary-button-normal border-2 rounded-input-rounding p-5",
             )}
         >
             <div

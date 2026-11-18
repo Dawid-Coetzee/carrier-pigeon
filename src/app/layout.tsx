@@ -12,6 +12,7 @@ const medieval_sharp = MedievalSharp({
 });
 
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Carrier Pigeon - The best way to communicate",
@@ -19,15 +20,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ 
-  children
+  children,
+  authModal
 }: Readonly<{
   children: React.ReactNode;
+  authModal: React.ReactNode;
 }>) {
   return (
     <html lang="en" className={medieval_sharp.variable}>
       <body className="antialiased">
         <SidebarProvider>
-          <Header />
+          <Suspense fallback={null}>
+            <Header />
+          </Suspense>
+          
+          {authModal}
 
           <AppSidebar />
           <main className="pt-14 p-4">

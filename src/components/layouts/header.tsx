@@ -7,8 +7,11 @@ import Plus from "../icons/plus";
 import Bell from "../icons/bell";
 import { SidebarTrigger } from "../ui/sidebar";
 import { getAuthSession } from "@/src/lib/auth";
+import UserAccountNav from "../ui/user-account-nav";
+import { connection } from "next/server";
 
 export default async function Header() {
+    await connection();
     const session = await getAuthSession();
 
     return (
@@ -38,7 +41,13 @@ export default async function Header() {
                 <Button isIcon variant="plain" size="md">
                     <Bell />
                 </Button>
-                <Link href="/sign-in" className={buttonVariants()}>Sign In</Link>
+                {session?.user ? (
+                    <UserAccountNav user={session.user} />
+                ) : (
+                    <Link href="/sign-in" className={buttonVariants()}>
+                        Sign In
+                    </Link>
+                )}
             </div>
         </header>
     );

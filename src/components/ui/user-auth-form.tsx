@@ -40,13 +40,13 @@ const UserAuthForm: FC<Props> = ({className, ...props}) => {
             {...props}
         >
             <Button 
-                size="sm" 
-                className="w-full"
+                size="md" 
+                className="w-80 text-lg"
                 variant={"login"}
                 onClick={loginWithGoogle}
                 isLoading={isLoading}
             >
-                {isLoading ? null : <Google className="size-4 mr-2" />}
+                {isLoading ? null : <Google className="size-5 mr-1" />}
                 Google
             </Button>
         </div>
