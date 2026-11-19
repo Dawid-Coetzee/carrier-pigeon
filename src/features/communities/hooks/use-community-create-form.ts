@@ -9,7 +9,8 @@ export default function UseCommunityCreateForm() {
         mode: "onTouched",
         defaultValues: {
             name: "",
-            description: ""
+            description: "",
+            category: "Anime & Cosplay"
         },
     })
     

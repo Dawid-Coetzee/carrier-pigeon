@@ -62,9 +62,9 @@ model Carrier {
   id            String    @id @default(cuid())
   name          String    @unique
   description   String
-  banner        String
-  avatar        String    
-  topic         String
+  banner        String?
+  avatar        String?    
+  category      String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   posts         Post[]

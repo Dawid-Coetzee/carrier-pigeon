@@ -95,6 +95,7 @@ export function DropzoneButton() {
         <Button 
             variant={hasFiles ? "bordered" : "secondary"} 
             size="sm" 
+            type="button"
             onClick={onClick}
         >
             <ImageAttach className="size-5"/>

@@ -31,24 +31,19 @@ export default async function Header() {
                 </Link>
             </div>
 
-            <div className="flex items-center">
-                <Button isIcon variant="plain" size="md">
-                    <Search />
-                </Button>
+            {session?.user ? (<div className="flex items-center">
                 <Button isIcon variant="plain" size="md">
                     <Plus />
                 </Button>
                 <Button isIcon variant="plain" size="md">
                     <Bell />
                 </Button>
-                {session?.user ? (
-                    <UserAccountNav user={session.user} />
-                ) : (
-                    <Link href="/sign-in" className={buttonVariants()}>
-                        Sign In
-                    </Link>
-                )}
-            </div>
+                <UserAccountNav user={session.user} />
+            </div>) : (
+            <Link href="/sign-in" className={buttonVariants()}>
+                Sign In
+            </Link>
+            )}
         </header>
     );
 }

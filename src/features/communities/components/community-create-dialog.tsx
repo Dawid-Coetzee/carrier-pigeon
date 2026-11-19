@@ -22,6 +22,11 @@ import useCommunityCreateStageOne from "../hooks/use-community-create-stage-one"
 import useCommunityCreateStageTwo from "../hooks/use-community-create-stage-two";
 import CommunityCreateStageThree from "./community-create-stage-three";
 import CommunityCreateStageFour from "./community-create-stage-four";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { communityFormSchema } from "../schema";
+import z from "zod";
+import { toast } from "sonner";
 
 export default function CommunityCreateDialog() {
     const { 
@@ -59,7 +64,51 @@ export default function CommunityCreateDialog() {
         moveTo
     })
 
+    const isStageThree = stage === CommunityCreateStage.Three;
     const isStageFour = stage === CommunityCreateStage.Four;
+
+    type CommunityFormValues = z.infer<typeof communityFormSchema>;
+
+    const createCommunityMutation = useMutation({
+        mutationFn: async (values: CommunityFormValues) => {
+            const body = new FormData();
+
+            body.set("name", values.name);
+            body.set("description", values.description);
+            body.set("category", values.category);
+
+            if (values.banner) body.set("banner", values.banner);
+            if (values.avatar) body.set("avatar", values.avatar);
+
+            const { data } = await axios.post("/api/carrier", body);
+            return data;
+        },
+        onError: (err) => {
+            if (err instanceof AxiosError) {
+                if (err.response?.status === 409) {
+                    return toast.error(
+                        "Carrier already exists.", {
+                        description: "Please choose a different carrier name."
+                    })
+                }
+
+                if (err.response?.status === 401) {
+                    return toast.error(
+                        "Login required", {
+                        description: "You need to login to create a carrier."
+                    })
+                }
+            }
+        }
+    });
+
+    const createCommunity = form.handleSubmit(async (values) => {
+        createCommunityMutation.mutate(values, {
+            onSuccess: () => {
+                moveTo(CommunityCreateStage.Four);
+            },
+        });
+    });
 
     return (
     <Dialog
@@ -135,7 +184,9 @@ export default function CommunityCreateDialog() {
                 isSaveable={isCropping}
                 isNextDisabled={isStageOneInvalid}
                 isStageFour={isStageFour}
+                isStageThree={isStageThree}
                 onSave={activeCropper?.cropImage}
+                onCreate={createCommunity}
                 onNext={handleNext}
                 onBack={handleBack}
                 onClose={handleClose}

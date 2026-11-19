@@ -75,6 +75,7 @@ export default function CommunityCreateStageTwo({
                                 variant="plain" 
                                 size="sm" 
                                 isIcon
+                                type="button"
                                 onClick={() => {onFileDelete(type)}}
                             >
                                 <Trash className="size-4" />

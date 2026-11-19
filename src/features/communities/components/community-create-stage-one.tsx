@@ -76,6 +76,9 @@ export default function CommunityCreateStageOne({ formControl }: Props) {
                                     className={fieldState.invalid ? "text-destructive" : "text-muted-foreground"} 
                                     length={field.value.length} 
                                 />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
                             </div>
                         </Field>
                         

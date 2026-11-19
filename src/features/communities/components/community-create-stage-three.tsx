@@ -4,7 +4,6 @@ import { communityFormSchema } from "../schema";
 import z from "zod";
 import { cn } from "@/src/lib/utils";
 import Button from "@/src/components/ui/button";
-import { useState, type MouseEvent } from "react";
 import Checkmark from "@/src/components/icons/checkmark";
 
 const buttons = [
@@ -125,38 +124,25 @@ type Props = {
 
 
 export default function CommunityCreateStageThree({ formControl }: Props) {
-    const [ selectedButton , setSelectedButton ] = useState<string>("Anime & Cosplay");
-    
-    const toggleSelected = (name: string) => {
-
-        setSelectedButton(name);
-
-        // server action
-    }
-
-    
-
     return (
         <Controller
-            name="name"
+            name="category"
             control={formControl}
-            render={({ fieldState }) => (
+            render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                     <div className="flex flex-wrap justify-center items-center gap-1">
                         {buttons.map(({ name, icon }) => {
-                        const isSelected = selectedButton === name;
+                        const isSelected = field.value === name;
                             
                         return (
                             <Button 
                                 key={name}
+                                type="button"
                                 variant={!isSelected ? "secondary" : "selected"}
                                 size="sm"
                                 className={cn("px-2.5 text-xs")}
                                 aria-pressed={isSelected}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    toggleSelected(name); 
-                                }}
+                                onClick={() => field.onChange(name)}
                             >
                                 {isSelected ? <Checkmark className="size-5 aria-hidden"/> : null}
                                 <span aria-hidden="true">{icon}</span>

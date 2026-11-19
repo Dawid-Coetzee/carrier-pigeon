@@ -42,6 +42,7 @@ export default function Button({
     variant, 
     className,
     size, 
+    disabled,
     ...buttonProps 
 }: ButtonProps) {
     return (
@@ -49,7 +50,7 @@ export default function Button({
         className={cn(buttonVariants({ variant, size}), className)}
         data-shape={isIcon ? "circle": "pill"}
         {...buttonProps} 
-        disabled={isLoading}
+        disabled={disabled || isLoading}
     />
     );
 }

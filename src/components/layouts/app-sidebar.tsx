@@ -14,6 +14,7 @@ import AppSidebarMenuCollapsible from "./app-sidebar-menu-collapsible";
 import { Settings } from "../icons/settings";
 import CommunityNavItems from "@/src/features/communities/components/community-nav-items";
 import CommunityCreateDialog from "@/src/features/communities/components/community-create-dialog";
+import { getAuthSession } from "@/src/lib/auth";
 
 // Menu items.
 const items = [
@@ -43,7 +44,8 @@ const items = [
     }
 ];
 
-export function AppSidebar() {
+export async  function AppSidebar() {
+    const session = await getAuthSession();
     return (
     <Sidebar>
         <SidebarContent>
@@ -59,9 +61,9 @@ export function AppSidebar() {
             </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator />
+        {session?.user ? <SidebarSeparator /> : ""}
 
-        <AppSidebarMenuCollapsible title="Communities">
+        {session?.user ? <AppSidebarMenuCollapsible title="Communities">
             <SidebarMenu>
                 <SidebarMenuItem>
                     <CommunityCreateDialog />
@@ -78,11 +80,8 @@ export function AppSidebar() {
 
                 <CommunityNavItems />
             </SidebarMenu>
-        </AppSidebarMenuCollapsible>
+        </AppSidebarMenuCollapsible> : ""}
 
-        <SidebarSeparator />
-        <SidebarSeparator />
-        <SidebarSeparator />
         </SidebarContent>
     </Sidebar>
     );

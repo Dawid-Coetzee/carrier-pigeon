@@ -9,10 +9,12 @@ type Props = {
     isSaveable: boolean;
     isNextDisabled: boolean;
     isStageFour: boolean;
+    isStageThree: boolean
     onNext: () => void;
     onSave?: () => void;
     onBack: () => void;
     onClose: (event: MouseEvent<HTMLButtonElement>) => void;
+    onCreate: () => void;
 }
 
 export function CommunityCreateDialogFooter({
@@ -21,8 +23,10 @@ export function CommunityCreateDialogFooter({
     isSaveable,
     isNextDisabled, 
     isStageFour,
+    isStageThree,
     onNext, 
     onSave,
+    onCreate,
     onBack, 
     onClose,
 }: Props) {
@@ -60,7 +64,7 @@ export function CommunityCreateDialogFooter({
                 variant="primary"
                 size="lg"
                 disabled={ isNextDisabled }
-                onClick={onNext}
+                onClick={isStageThree ? onCreate : onNext}
             >
                 Next
             </Button>}
